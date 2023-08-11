@@ -1,0 +1,80 @@
+[
+    {
+        "id": "431f278d3dd31e78",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "dc1e6033779edab3",
+        "type": "function",
+        "z": "431f278d3dd31e78",
+        "name": "function 1",
+        "func": "var s0 = new Array(120)\nfor (var i = 0; i < s0.length; i++)\n    s0[i] = 15 * Math.sin(i * ((Math.PI * 4) / s0.length))\nconsole.log(asciichart.plot(s0))\nmsg.payload = asciichart.plot(s0)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "asciichart",
+                "module": "asciichart"
+            }
+        ],
+        "x": 190,
+        "y": 340,
+        "wires": [
+            [
+                "cc36f0ddead6ce1f"
+            ]
+        ]
+    },
+    {
+        "id": "20dde37c7b1b935d",
+        "type": "inject",
+        "z": "431f278d3dd31e78",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 240,
+        "wires": [
+            [
+                "dc1e6033779edab3"
+            ]
+        ]
+    },
+    {
+        "id": "cc36f0ddead6ce1f",
+        "type": "debug",
+        "z": "431f278d3dd31e78",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 300,
+        "y": 200,
+        "wires": []
+    }
+]
