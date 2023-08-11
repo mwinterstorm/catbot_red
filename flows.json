@@ -23,8 +23,8 @@
                 "module": "asciichart"
             }
         ],
-        "x": 190,
-        "y": 340,
+        "x": 240,
+        "y": 120,
         "wires": [
             [
                 "cc36f0ddead6ce1f"
@@ -73,8 +73,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 300,
-        "y": 200,
+        "x": 540,
+        "y": 120,
         "wires": []
     }
 ]
