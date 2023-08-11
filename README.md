@@ -5,6 +5,8 @@ catbot
 
 Bot for matrix. Currently designed for my personal use - mainly silly and fun
 
+Built on Node Red
+
 ### Integrations
 1. Nightscout (WIP)
 1. Home Assistant (WIP)
