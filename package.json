@@ -2,7 +2,13 @@
     "name": "catbot",
     "description": "Bot for matrix",
     "version": "0.0.1",
-    "dependencies": {},
+    "dependencies": {
+        "node-red-contrib-credentials": "0.2.2",
+        "node-red-contrib-home-assistant-websocket": "0.56.0",
+        "node-red-contrib-matrix-chat": "0.7.0",
+        "node-red-contrib-moment": "5.0.0",
+        "node-red-contrib-time-range-switch": "1.1.3"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flows.json",
