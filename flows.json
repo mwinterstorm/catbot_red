@@ -3,7 +3,7 @@
         "id": "f0657749fd958ec3",
         "type": "tab",
         "label": "CatBot",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -213,9 +213,7 @@
             "a02ed4ab1bf97ee1"
         ],
         "x": 14,
-        "y": 79,
-        "w": 1052,
-        "h": 202
+        "y": 79
     },
     {
         "id": "365de1913bf44b79",
@@ -237,9 +235,7 @@
             "2e9bc4986e964414"
         ],
         "x": 4,
-        "y": 319,
-        "w": 842,
-        "h": 162
+        "y": 319
     },
     {
         "id": "3e2776170b75bf6a",
@@ -256,9 +252,7 @@
             "c46d860f9d15df6f"
         ],
         "x": 694,
-        "y": 79,
-        "w": 242,
-        "h": 222
+        "y": 79
     },
     {
         "id": "bf02d8ff45864eda",
@@ -279,9 +273,7 @@
             "6a469a172b61ff41"
         ],
         "x": 4,
-        "y": 79,
-        "w": 672,
-        "h": 222
+        "y": 79
     },
     {
         "id": "ee84ac078f839ee6",
@@ -329,9 +321,7 @@
             "8b219f5c926c01b7"
         ],
         "x": 14,
-        "y": 19,
-        "w": 832,
-        "h": 282
+        "y": 19
     },
     {
         "id": "98527aa7d133e812",
@@ -349,9 +339,19 @@
             "60b5d567049ec6b2"
         ],
         "x": 194,
-        "y": 339,
-        "w": 792,
-        "h": 282
+        "y": 339
+    },
+    {
+        "id": "cfb9292e374e6d97",
+        "type": "junction",
+        "z": "af4923605b6d1997",
+        "x": 280,
+        "y": 40,
+        "wires": [
+            [
+                "f462d72ecdf7ddca"
+            ]
+        ]
     },
     {
         "id": "57146ada2355e7df",
@@ -365,7 +365,7 @@
         "id": "1f843fd7.cd512",
         "type": "server",
         "name": "Home Assistant",
-        "addon": true,
+        "addon": false,
         "rejectUnauthorizedCerts": true,
         "ha_boolean": "",
         "connectionDelay": false,
@@ -1246,14 +1246,14 @@
         "id": "f462d72ecdf7ddca",
         "type": "credentials",
         "z": "af4923605b6d1997",
-        "name": "nightscout base_url",
+        "name": "nightscout",
         "props": [
             {
-                "value": "base_url_nightscout",
+                "value": "#:(file)::nightscout.base_url",
                 "type": "global"
             }
         ],
-        "x": 430,
+        "x": 410,
         "y": 40,
         "wires": [
             []
@@ -1284,59 +1284,7 @@
         "y": 40,
         "wires": [
             [
-                "f462d72ecdf7ddca"
-            ]
-        ]
-    },
-    {
-        "id": "54eda7679242e697",
-        "type": "change",
-        "z": "af4923605b6d1997",
-        "name": "",
-        "rules": [
-            {
-                "t": "delete",
-                "p": "base_url",
-                "pt": "global"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 660,
-        "y": 440,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "fa2bf72eb7fd7657",
-        "type": "inject",
-        "z": "af4923605b6d1997",
-        "name": "Initialise",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "3600",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "intialise",
-        "payload": "",
-        "payloadType": "date",
-        "x": 320,
-        "y": 360,
-        "wires": [
-            [
-                "54eda7679242e697"
+                "cfb9292e374e6d97"
             ]
         ]
     },
@@ -1643,7 +1591,7 @@
         "z": "eef341be69962877",
         "g": "a19998c49682db6c",
         "name": "debug 14",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": true,
@@ -2043,7 +1991,7 @@
         "type": "function",
         "z": "431f278d3dd31e78",
         "name": "Ascii Chart",
-        "func": "var s0 = new Array(120)\nfor (var i = 0; i < s0.length; i++)\n    s0[i] = 15 * Math.sin(i * ((Math.PI * 4) / s0.length))\nconsole.log(asciichart.plot(s0))\nmsg.payload = asciichart.plot(s0)\nreturn msg;",
+        "func": "var s0 = new Array(120)\nfor (var i = 0; i < s0.length; i++)\n    s0[i] = 15 * Math.sin(i * ((Math.PI * 4) / s0.length))\nconsole.log(asciichart.plot(s0))\nmsg.payload = asciichart.plot(s0)\nmsg.array = s0\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2054,7 +2002,7 @@
                 "module": "asciichart"
             }
         ],
-        "x": 810,
+        "x": 470,
         "y": 160,
         "wires": [
             [
@@ -2083,8 +2031,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 580,
-        "y": 140,
+        "x": 240,
+        "y": 280,
         "wires": [
             [
                 "dc1e6033779edab3"
@@ -2100,61 +2048,13 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1100,
+        "x": 660,
         "y": 160,
         "wires": []
-    },
-    {
-        "id": "c9bcfce3a4674123",
-        "type": "template",
-        "z": "431f278d3dd31e78",
-        "name": "Last 48 Entries",
-        "field": "url",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "https://sugar.markwr.com/api/v1/entries/sgv?count=48",
-        "output": "str",
-        "x": 340,
-        "y": 260,
-        "wires": [
-            [
-                "37a42daf4686f2cf"
-            ]
-        ]
-    },
-    {
-        "id": "a65fa937977bea53",
-        "type": "inject",
-        "z": "431f278d3dd31e78",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 120,
-        "y": 260,
-        "wires": [
-            [
-                "c9bcfce3a4674123"
-            ]
-        ]
     },
     {
         "id": "37a42daf4686f2cf",
@@ -2185,11 +2085,12 @@
                 "valueValue": "application/json"
             }
         ],
-        "x": 630,
-        "y": 280,
+        "x": 510,
+        "y": 80,
         "wires": [
             [
-                "332afe8cc3f9f84a"
+                "332afe8cc3f9f84a",
+                "ddff58edaa860225"
             ]
         ]
     },
@@ -2206,8 +2107,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 860,
-        "y": 400,
+        "x": 800,
+        "y": 80,
         "wires": []
     },
     {
@@ -2348,6 +2249,90 @@
             [
                 "0fc732a911a12e43"
             ]
+        ]
+    },
+    {
+        "id": "075aa026aef3f16f",
+        "type": "function",
+        "z": "431f278d3dd31e78",
+        "name": "build URL",
+        "func": "let count = msg.payload.hours * 12\nlet base_url = global.get(\"nightscout.base_url\",\"file\")\nlet url_part1 = \"/api/v1/entries/sgv\" \nlet query = \"?count=\" + count\nmsg.url = base_url + url_part1 + query\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 80,
+        "wires": [
+            [
+                "37a42daf4686f2cf"
+            ]
+        ]
+    },
+    {
+        "id": "a65fa937977bea53",
+        "type": "inject",
+        "z": "431f278d3dd31e78",
+        "name": "",
+        "props": [
+            {
+                "p": "payload.hours",
+                "v": "4",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "075aa026aef3f16f"
+            ]
+        ]
+    },
+    {
+        "id": "466baec22743fa8d",
+        "type": "moment",
+        "z": "431f278d3dd31e78",
+        "name": "",
+        "topic": "",
+        "input": "payload",
+        "inputType": "msg",
+        "inTz": "Pacific/Auckland",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "",
+        "locale": "en-US",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "Pacific/Auckland",
+        "x": 360,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ddff58edaa860225",
+        "type": "function",
+        "z": "431f278d3dd31e78",
+        "name": "function 9",
+        "func": "const rawData = msg.payload\nlet mmollArr = []\nfor (let i = 0; i < rawData.length; i++) {\n    let mmoll = rawData[i].sgv / 18\n    mmollArr.unshift(mmoll)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 280,
+        "wires": [
+            []
         ]
     },
     {
