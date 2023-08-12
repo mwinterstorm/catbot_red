@@ -297,9 +297,7 @@
             "a7a0f52c5408e527"
         ],
         "x": 94,
-        "y": 19,
-        "w": 712,
-        "h": 142
+        "y": 19
     },
     {
         "id": "98527aa7d133e812",
@@ -375,9 +373,7 @@
             "a65fa937977bea53"
         ],
         "x": 34,
-        "y": 319,
-        "w": 872,
-        "h": 262
+        "y": 319
     },
     {
         "id": "d1677d80792879be",
@@ -396,9 +392,7 @@
             "6f1fbab3ef578ea5"
         ],
         "x": 14,
-        "y": 179,
-        "w": 792,
-        "h": 82
+        "y": 179
     },
     {
         "id": "a19998c49682db6c",
@@ -461,6 +455,34 @@
         "y": 19,
         "w": 452,
         "h": 142
+    },
+    {
+        "id": "1480b7b889901adc",
+        "type": "group",
+        "z": "98817579b4d43a21",
+        "name": "WIP",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "831c45b932a8148f",
+            "38650eec69417288",
+            "7cc40bd371bd0796",
+            "734b8d33fedac998",
+            "c0a0c01a35e96a82",
+            "a8172d506c69e3fb",
+            "452a883e7e8dfa4f",
+            "57a8f4cdd91a8975",
+            "0ac65ca9a86b1ab4",
+            "28465dd271117e15",
+            "f12b32c20ea2d017",
+            "4515575ba6d1f2c7",
+            "4dabcaa9185e9af4"
+        ],
+        "x": 54,
+        "y": 439,
+        "w": 732,
+        "h": 462
     },
     {
         "id": "cfb9292e374e6d97",
@@ -1780,6 +1802,8 @@
         "id": "4515575ba6d1f2c7",
         "type": "function",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "React to Cats",
         "func": "const cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst found = message.match(cats)\nfor (let i = 0; i < cats.length; i++) {\n    if (message.match(cats[i])) {\n        msg.payload = \"😻\"\n        msg.status = \"Cat Found 😻\"\n        return msg;\n    }\n}\nnode.done()",
         "outputs": 1,
@@ -1787,8 +1811,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 520,
+        "x": 400,
+        "y": 480,
         "wires": [
             [
                 "7cc40bd371bd0796",
@@ -1800,6 +1824,8 @@
         "id": "f12b32c20ea2d017",
         "type": "function",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "React to Dogs",
         "func": "const search = [\n    /\\b(Magny)/g,\n    /\\b(dog\\w?|doggy\\w?|doggies|puppy\\w?|puppies)\\b/gi,\n]\nconst message = msg.payload\nconst found = message.match(search)\nfor (let i = 0; i < search.length; i++) {\n    if (message.match(search[i])) {\n            msg.payload = \"😾\"\n            msg.status = \"Dog Found 😾\"\n            return msg;\n    }\n}\nnode.done()",
         "outputs": 1,
@@ -1807,8 +1833,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 560,
+        "x": 400,
+        "y": 520,
         "wires": [
             [
                 "7cc40bd371bd0796",
@@ -1820,8 +1846,32 @@
         "id": "831c45b932a8148f",
         "type": "function",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "Vomit",
         "func": "const search = [\n    /\\b(Jane)/g,\n    /\\b(upstairs\\s?neighbours|guy\\s?upstairs|noise\\s?upstairs|upstairs\\s?noise|going\\s?on\\s?upstairs)\\b/gi,\n]\nconst message = msg.payload\nconst found = message.match(search)\nfor (let i = 0; i < search.length; i++) {\n    if (message.match(search[i])) {\n        msg.payload = \"🤮\"\n        msg.status = \"CatBot Vomited\"\n        return msg;\n    }\n}\nnode.done()",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 560,
+        "wires": [
+            [
+                "7cc40bd371bd0796",
+                "734b8d33fedac998"
+            ]
+        ]
+    },
+    {
+        "id": "28465dd271117e15",
+        "type": "function",
+        "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
+        "name": "React to Holiday",
+        "func": "const search = [\n    /\\b(Bali|Ubud|Indonesia|Seminyak|Uluwatu)\\b/g,\n    /\\b(holiday\\w?|time\\s?off)\\b/gi,\n]\nconst message = msg.payload\nconst found = message.match(search)\nfor (let i = 0; i < search.length; i++) {\n    if (message.match(search[i])) {\n        msg.payload = \"😎\"\n        msg.status = \"CatBot is cool\"\n        return msg;\n    }\n}\nnode.done()",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1837,29 +1887,11 @@
         ]
     },
     {
-        "id": "28465dd271117e15",
-        "type": "function",
-        "z": "98817579b4d43a21",
-        "name": "React to Holiday",
-        "func": "const search = [\n    /\\b(Bali|Ubud|Indonesia|Seminyak|Uluwatu)\\b/g,\n    /\\b(holiday\\w?|time\\s?off)\\b/gi,\n]\nconst message = msg.payload\nconst found = message.match(search)\nfor (let i = 0; i < search.length; i++) {\n    if (message.match(search[i])) {\n        msg.payload = \"😎\"\n        msg.status = \"CatBot is cool\"\n        return msg;\n    }\n}\nnode.done()",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 450,
-        "y": 640,
-        "wires": [
-            [
-                "7cc40bd371bd0796",
-                "734b8d33fedac998"
-            ]
-        ]
-    },
-    {
         "id": "7cc40bd371bd0796",
         "type": "change",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "",
         "rules": [
             {
@@ -1875,8 +1907,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
-        "y": 720,
+        "x": 680,
+        "y": 680,
         "wires": [
             []
         ]
@@ -1885,6 +1917,8 @@
         "id": "c0a0c01a35e96a82",
         "type": "function",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "Love Kitties 8% of time",
         "func": "const cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nfor (let i = 0; i < cats.length; i++) {\nconst found = message.match(cats[i])\n    if (message.match(cats[i]) && Math.random() <= 0.08 && user != \"@bot.catbot:markwr.com\") {\n        msg.payload = \"Meow! I Love \" + found + \" 😻 xoxox \"\n        let status = \"CatBot Loved \" + found\n        msg.status = status\n        msg.format = \"null\"\n        msg.command = [\n            \"catBotReact\"\n        ]\n        node.status({ fill: \"green\", shape: \"dot\", text: status });\n        return msg;\n    } \n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nnode.done();",
         "outputs": 1,
@@ -1892,8 +1926,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 270,
-        "y": 820,
+        "x": 230,
+        "y": 780,
         "wires": [
             [
                 "7cc40bd371bd0796",
@@ -1905,6 +1939,8 @@
         "id": "4dabcaa9185e9af4",
         "type": "rbe",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -1913,26 +1949,18 @@
         "septopics": true,
         "property": "payload",
         "topi": "eventId",
-        "x": 730,
-        "y": 860,
+        "x": 690,
+        "y": 820,
         "wires": [
             []
         ]
     },
     {
-        "id": "78b8f8be05c512b7",
-        "type": "comment",
-        "z": "98817579b4d43a21",
-        "name": "Output connections",
-        "info": "1 - reaction\n2 - send message",
-        "x": 670,
-        "y": 520,
-        "wires": []
-    },
-    {
         "id": "a8172d506c69e3fb",
         "type": "function",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "Miss / Love Marissa 12.5% of time",
         "func": "const search = [\n    /\\b(miss\\s?you|love\\s?you)\\b/gi,\n    // /\\b(Thatcher|Thatchy|Thatch)/g,\n    // /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nlet marissa = /marissa/i\nif (marissa.test(user)) {\n    for (let i = 0; i < search.length; i++) {\n        const found = message.match(search[i])\n        if (message.match(search[i]) && Math.random() <= 0.125) {\n            msg.payload = \"Meow! 😻 I \" + found + \" too Marissa xoxo\"\n            let status = \"Miss/Love Marissa\"\n            msg.status = status\n            msg.format = \"null\"\n            msg.command = [\n                \"catBotReact\"\n            ]\n            node.status({ fill: \"green\", shape: \"dot\", text: status });\n            return msg;\n        } \n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nnode.done();",
         "outputs": 1,
@@ -1940,8 +1968,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 300,
-        "y": 860,
+        "x": 260,
+        "y": 820,
         "wires": [
             [
                 "4dabcaa9185e9af4",
@@ -1953,6 +1981,8 @@
         "id": "452a883e7e8dfa4f",
         "type": "function",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "Comment on Holiday 35% of time",
         "func": "const search = [\n    /\\b(Bali|Ubud|Indonesia|Seminyak|Uluwatu|Hawkes\\s?Bay)\\b/g,\n]\n\nconst message = msg.payload\nconst user = msg.userId\nlet bot = /bot/i\nif (!bot.test(user)) {\n    for (let i = 0; i < search.length; i++) {\n        const found = message.match(search[i])\n        const response = [\n            \"I've packed my bags! 200 pairs of kitty sunglasses!!!! xoxoxo\",\n            \"Cat wait to travel to \" + found + \" with you\",\n            \"Is it furr to travel to \" + found + \"?\",\n            \"🛫✈️✈️✈️✈️✈️🛬🏖️🍹🏊️😻\",\n            \"Are we there yet?\",\n        ]\n        if (message.match(search[i]) && Math.random() <= 0.35) {\n            let index = Math.floor(Math.random() * response.length)\n            msg.payload = \"Meow! \" + response[index]\n            let status = \"CatBot comments on holiday\"\n            msg.status = status\n            msg.format = \"null\"\n            msg.command = [\n                \"catBotReact\"\n            ]\n            node.status({ fill: \"green\", shape: \"dot\", text: status });\n            return msg;\n        }\n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nnode.done();",
         "outputs": 1,
@@ -1960,8 +1990,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 300,
-        "y": 900,
+        "x": 260,
+        "y": 860,
         "wires": [
             [
                 "4dabcaa9185e9af4",
@@ -1973,6 +2003,8 @@
         "id": "38650eec69417288",
         "type": "rbe",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -1981,8 +2013,8 @@
         "septopics": true,
         "property": "payload",
         "topi": "eventId",
-        "x": 170,
-        "y": 680,
+        "x": 130,
+        "y": 640,
         "wires": [
             [
                 "c0a0c01a35e96a82",
@@ -2001,6 +2033,8 @@
         "id": "0ac65ca9a86b1ab4",
         "type": "function",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "React to CatBot",
         "func": "const cats = [\n    /\\b(Cat[bB]ot)/g,\n]\nconst message = msg.payload\nconst found = message.match(cats)\nfor (let i = 0; i < cats.length; i++) {\n    if (message.match(cats[i])) {\n        msg.payload = \"🐱\"\n        msg.status = \"Cat Found 🐱\"\n        return msg;\n    }\n}\nnode.done()",
         "outputs": 1,
@@ -2008,8 +2042,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 680,
+        "x": 400,
+        "y": 640,
         "wires": [
             [
                 "7cc40bd371bd0796",
@@ -2021,6 +2055,8 @@
         "id": "57a8f4cdd91a8975",
         "type": "function",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "React to Wordle",
         "func": "const search = [\n    /\\b(Wordle)\\b/gi,\n]\nconst close = /\\b(Wordle\\s+\\d*\\s+[5-6])/gi\nconst great = /\\b(Wordle\\s+\\d*\\s+[1-2])/gi\nconst message = msg.payload\nconst found = message.match(search)\nfor (let i = 0; i < search.length; i++) {\n    if (message.match(search[i])) {\n        if (close.test(message)) {\n            msg.payload = \"🙀\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        } else if (great.test(message)) {\n            msg.payload = \"🥳\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        } else {\n            msg.payload = \"🤓\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        }\n    }\n}\nnode.done()",
         "outputs": 1,
@@ -2028,8 +2064,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 720,
+        "x": 400,
+        "y": 680,
         "wires": [
             [
                 "734b8d33fedac998"
@@ -2040,6 +2076,8 @@
         "id": "734b8d33fedac998",
         "type": "rbe",
         "z": "98817579b4d43a21",
+        "d": true,
+        "g": "1480b7b889901adc",
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -2048,32 +2086,9 @@
         "septopics": true,
         "property": "payload",
         "topi": "eventId",
-        "x": 730,
-        "y": 640,
+        "x": 690,
+        "y": 600,
         "wires": [
-            []
-        ]
-    },
-    {
-        "id": "2b2807a3c0c268f7",
-        "type": "subflow:6b24fc36ef6360d6",
-        "z": "98817579b4d43a21",
-        "name": "",
-        "env": [
-            {
-                "name": "chance",
-                "value": "8",
-                "type": "num"
-            }
-        ],
-        "x": 740,
-        "y": 780,
-        "wires": [
-            [
-                "7cc40bd371bd0796",
-                "4dabcaa9185e9af4"
-            ],
-            [],
             []
         ]
     },
