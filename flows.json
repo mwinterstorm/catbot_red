@@ -231,7 +231,6 @@
             "04bd586e16ce34be",
             "8dd76251c3eacb93",
             "f835ee553397b27c",
-            "0238294085eee9f3",
             "8c8d1ee7e18390dc",
             "81e3acc30812436c",
             "a0f3ba7841d1f81c",
@@ -241,7 +240,7 @@
         "x": 24,
         "y": 359,
         "w": 842,
-        "h": 162
+        "h": 142
     },
     {
         "id": "3e2776170b75bf6a",
@@ -297,7 +296,9 @@
             "a7a0f52c5408e527"
         ],
         "x": 94,
-        "y": 19
+        "y": 19,
+        "w": 712,
+        "h": 142
     },
     {
         "id": "98527aa7d133e812",
@@ -366,14 +367,14 @@
             "dc1e6033779edab3",
             "20dde37c7b1b935d",
             "35919806d228a4d0",
-            "37a42daf4686f2cf",
-            "075aa026aef3f16f",
             "332afe8cc3f9f84a",
             "ddff58edaa860225",
             "a65fa937977bea53"
         ],
         "x": 34,
-        "y": 319
+        "y": 319,
+        "w": 872,
+        "h": 262
     },
     {
         "id": "d1677d80792879be",
@@ -392,7 +393,9 @@
             "6f1fbab3ef578ea5"
         ],
         "x": 14,
-        "y": 179
+        "y": 179,
+        "w": 792,
+        "h": 82
     },
     {
         "id": "a19998c49682db6c",
@@ -449,12 +452,13 @@
             "f462d72ecdf7ddca",
             "4e0132b221748329",
             "87666acc7001bbf4",
-            "cfb9292e374e6d97"
+            "cfb9292e374e6d97",
+            "66bfd08bfa9cb39c"
         ],
         "x": 34,
         "y": 19,
         "w": 452,
-        "h": 142
+        "h": 202
     },
     {
         "id": "1480b7b889901adc",
@@ -494,7 +498,8 @@
         "wires": [
             [
                 "f462d72ecdf7ddca",
-                "87666acc7001bbf4"
+                "87666acc7001bbf4",
+                "66bfd08bfa9cb39c"
             ]
         ]
     },
@@ -768,7 +773,7 @@
         "type": "function",
         "z": "55dc99b1c7d46138",
         "name": "Love Kitties 8% of time",
-        "func": "const cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nfor (let i = 0; i < cats.length; i++) {\nconst found = message.match(cats[i])\n    if (message.match(cats[i]) && Math.random() <= 0.08 && user != \"@bot.catbot:markwr.com\") {\n        msg.payload = \"Meow! I Love \" + found + \" 😻 xoxox \"\n        let status = \"CatBot Loved \" + found\n        msg.status = status\n        msg.format = \"null\"\n        msg.command = [\n            \"catBotReact\"\n        ]\n        node.status({ fill: \"green\", shape: \"dot\", text: status });\n        return msg;\n    } \n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nnode.done();",
+        "func": "const cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nconst catbot = \"@bot.catbot:\" + global.get(\"matrix.domain\", \"file\")\nfor (let i = 0; i < cats.length; i++) {\nconst found = message.match(cats[i])\n    if (message.match(cats[i]) && Math.random() <= 0.08 && user != catbot) {\n        msg.payload = \"Meow! I Love \" + found + \" 😻 xoxox \"\n        let status = \"CatBot Loved \" + found\n        msg.status = status\n        msg.format = \"null\"\n        msg.command = [\n            \"catBotReact\"\n        ]\n        node.status({ fill: \"green\", shape: \"dot\", text: status });\n        return msg;\n    } \n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nnode.done();",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1000,7 +1005,7 @@
         "z": "f0657749fd958ec3",
         "g": "365de1913bf44b79",
         "name": "Randomise Pics",
-        "func": "const arr = msg.payload.local\nlet pic = Math.floor(Math.random() * arr.length)\nlet profile = arr[pic]\nmsg.payload = {\n    \"avatar_url\": profile\n}\nmsg.userId = '@bot.catbot:markwr.com'\nif (arr.length > 1) {\n    node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot updating profile\" });\n    return msg;\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\n    node.done();\n}\n",
+        "func": "const arr = msg.payload.local\nlet pic = Math.floor(Math.random() * arr.length)\nlet profile = arr[pic]\nmsg.payload = {\n    \"avatar_url\": profile\n}\nmsg.userId = '@bot.catbot:' + global.get(\"matrix.domain\",\"file\")\nif (arr.length > 1) {\n    node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot updating profile\" });\n    return msg;\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\n    node.done();\n}\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1015,32 +1020,15 @@
         ]
     },
     {
-        "id": "0238294085eee9f3",
-        "type": "json",
-        "z": "f0657749fd958ec3",
-        "g": "365de1913bf44b79",
-        "name": "Format JSON",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 420,
-        "y": 460,
-        "wires": [
-            [
-                "f835ee553397b27c"
-            ]
-        ]
-    },
-    {
         "id": "8c8d1ee7e18390dc",
         "type": "http request",
         "z": "f0657749fd958ec3",
         "g": "365de1913bf44b79",
         "name": "Get profile pics",
         "method": "GET",
-        "ret": "txt",
+        "ret": "obj",
         "paytoqs": "ignore",
-        "url": "https://matrix.markwr.com/_synapse/admin/v1/room/!xVjUstFMsJzWCoNOSw:markwr.com/media",
+        "url": "",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -1052,7 +1040,7 @@
         "y": 400,
         "wires": [
             [
-                "0238294085eee9f3"
+                "f835ee553397b27c"
             ]
         ]
     },
@@ -1062,7 +1050,7 @@
         "z": "f0657749fd958ec3",
         "g": "365de1913bf44b79",
         "name": "Change Profile Pic",
-        "func": "const action = [/\\bpic\\b/i, /\\bpicture\\b/i]\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0]) || trigger == \"timer\" && msg.chance < 0.2) {\n        let payload = \"Meow! I'm changing my purrfile picture!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"null\"\n        return [msg, msg];\n    }\n}\nif (command[0] == \"help\") {\n    let words = action.toString()\n    words = words.replace(/(?<=\\\\)\\w?/g, \"\")\n    words = words.replace(/\\\\/g, \"\")\n    // words = words.replace(/\\\\\\w{n}/, \"\")\n    let arr = words.match(/\\w+(?=\\/)/g)\n    msg.debug = {\n        \"arr\": arr,\n        \"words\": words\n    }\n    let helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - change CatBot's profile picture </li>\"\n    if (msg.helpList) {\n        msg.helpList += helpText\n    } else {\n        msg.helpList = helpText\n    }\n    node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n    return [null, msg];\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\n    node.done();\n}",
+        "func": "const action = [/\\bpic\\b/i, /\\bpicture\\b/i]\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0]) || trigger == \"timer\" && msg.chance < 0.2) {\n        let payload = \"Meow! I'm changing my purrfile picture!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"null\"\n        let base_url = global.get(\"matrix.base_url\", \"file\")\n        let url_part1 = \"/_synapse/admin/v1/room/\"\n        let room = global.get(\"matrix.rooms.catbotprofilepics\", \"file\")\n        let url_part2 = \"/media\"\n        msg.url = base_url + url_part1 + room + url_part2\n        return [msg, msg];\n    }\n}\nif (command[0] == \"help\") {\n    let words = action.toString()\n    words = words.replace(/(?<=\\\\)\\w?/g, \"\")\n    words = words.replace(/\\\\/g, \"\")\n    // words = words.replace(/\\\\\\w{n}/, \"\")\n    let arr = words.match(/\\w+(?=\\/)/g)\n    msg.debug = {\n        \"arr\": arr,\n        \"words\": words\n    }\n    let helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - change CatBot's profile picture </li>\"\n    if (msg.helpList) {\n        msg.helpList += helpText\n    } else {\n        msg.helpList = helpText\n    }\n    node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n    return [null, msg];\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\n    node.done();\n}",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -1147,8 +1135,8 @@
         "links": [
             "34bf1b89086ee69f"
         ],
-        "x": 315,
-        "y": 480,
+        "x": 325,
+        "y": 460,
         "wires": []
     },
     {
@@ -1263,7 +1251,7 @@
         "z": "f0657749fd958ec3",
         "g": "bf02d8ff45864eda",
         "name": "!meow",
-        "func": "const wakeWord = /^!meow/i\nconst catBot = /^CatBot\\s*$/i\nconst help = /help/i\nconst user = msg.userId\nconst room = msg.topic\nlet message = msg.payload\nif (!user.includes(\"catbot\")) {\n    if (wakeWord.test(message) && !help.test(message) && message.length > 6) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg,null];\n    } else if (wakeWord.test(message) && help.test(message) || wakeWord.test(message) && message.length < 7 || catBot.test(message)) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        command.splice(0, 1, \"help\")\n        node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n        msg.command = command\n        msg.format = \"html\"\n        msg.payload = \"CatBot Kitty Helping\"\n        msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n        return [null,msg];\n    } else if (room == \"!kSzZDIKjDiNcQHaBoT:markwr.com\") {\n        let command = message.replace(wakeWord, '').split(' ')\n        if (help.test(message)) {\n            let command = message.replace(wakeWord, '').split(' ')\n            command.splice(0, 1, \"help\")\n            node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n            msg.command = command\n            msg.format = \"html\"\n            msg.payload = \"CatBot Kitty Helping\"\n            msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n            return [null, msg];\n        }\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg, null];\n    } else {\n        node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n        node.done();\n    }\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n    node.done();\n}\n",
+        "func": "const wakeWord = /^!meow/i\nconst catBot = /^CatBot\\s*$/i\nconst help = /help/i\nconst user = msg.userId\nconst room = msg.topic\nlet message = msg.payload\nif (!user.includes(\"catbot\")) {\n    if (wakeWord.test(message) && !help.test(message) && message.length > 6) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg,null];\n    } else if (wakeWord.test(message) && help.test(message) || wakeWord.test(message) && message.length < 7 || catBot.test(message)) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        command.splice(0, 1, \"help\")\n        node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n        msg.command = command\n        msg.format = \"html\"\n        msg.payload = \"CatBot Kitty Helping\"\n        msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n        return [null,msg];\n    } else if (room == global.get(\"matrix.rooms.catbot\",\"file\")) {\n        let command = message.replace(wakeWord, '').split(' ')\n        if (help.test(message)) {\n            let command = message.replace(wakeWord, '').split(' ')\n            command.splice(0, 1, \"help\")\n            node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n            msg.command = command\n            msg.format = \"html\"\n            msg.payload = \"CatBot Kitty Helping\"\n            msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n            return [null, msg];\n        }\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg, null];\n    } else {\n        node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n        node.done();\n    }\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n    node.done();\n}\n",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -1389,6 +1377,10 @@
             {
                 "value": "#:(file)::nightscout.base_url",
                 "type": "global"
+            },
+            {
+                "value": "#:(file)::nightscout.apisecret",
+                "type": "global"
             }
         ],
         "x": 370,
@@ -1482,7 +1474,7 @@
         "rules": [
             {
                 "t": "delete",
-                "p": "#:(file)::homeassistant",
+                "p": "#:(file)::matrix.base_uel",
                 "pt": "global"
             }
         ],
@@ -1493,6 +1485,44 @@
         "reg": false,
         "x": 760,
         "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "66bfd08bfa9cb39c",
+        "type": "credentials",
+        "z": "af4923605b6d1997",
+        "g": "2650e46b75c555ea",
+        "name": "Matrix",
+        "props": [
+            {
+                "value": "#:(file)::matrix.base_url",
+                "type": "global"
+            },
+            {
+                "value": "#:(file)::matrix.domain",
+                "type": "global"
+            },
+            {
+                "value": "#:(file)::matrix.rooms.catbotprofilepics",
+                "type": "global"
+            },
+            {
+                "value": "#:(file)::matrix.rooms.catbot",
+                "type": "global"
+            },
+            {
+                "value": "#:(file)::matrix.rooms.catfacts",
+                "type": "global"
+            },
+            {
+                "value": "#:(file)::matrix.rooms.camerafeed",
+                "type": "global"
+            }
+        ],
+        "x": 350,
+        "y": 180,
         "wires": [
             []
         ]
@@ -1653,7 +1683,9 @@
         "x": 570,
         "y": 140,
         "wires": [
-            [],
+            [
+                "402c4e72eb9aa7ef"
+            ],
             []
         ]
     },
@@ -1668,8 +1700,8 @@
                 "t": "set",
                 "p": "topic",
                 "pt": "msg",
-                "to": "!heqwVjLqaTkdmpkaSu:markwr.com",
-                "tot": "str"
+                "to": "#:(file)::matrix.rooms.catfacts",
+                "tot": "global"
             },
             {
                 "t": "set",
@@ -1699,7 +1731,7 @@
         "to": "",
         "reg": false,
         "x": 760,
-        "y": 120,
+        "y": 140,
         "wires": [
             [
                 "b6762903c57fbf2a"
@@ -1920,7 +1952,7 @@
         "d": true,
         "g": "1480b7b889901adc",
         "name": "Love Kitties 8% of time",
-        "func": "const cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nfor (let i = 0; i < cats.length; i++) {\nconst found = message.match(cats[i])\n    if (message.match(cats[i]) && Math.random() <= 0.08 && user != \"@bot.catbot:markwr.com\") {\n        msg.payload = \"Meow! I Love \" + found + \" 😻 xoxox \"\n        let status = \"CatBot Loved \" + found\n        msg.status = status\n        msg.format = \"null\"\n        msg.command = [\n            \"catBotReact\"\n        ]\n        node.status({ fill: \"green\", shape: \"dot\", text: status });\n        return msg;\n    } \n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nnode.done();",
+        "func": "const cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nconst catbot = \"@bot.catbot:\" + global.get(\"matrix.domain\",\"file\")\nfor (let i = 0; i < cats.length; i++) {\nconst found = message.match(cats[i])\n    if (message.match(cats[i]) && Math.random() <= 0.08 && user != catbot) {\n        msg.payload = \"Meow! I Love \" + found + \" 😻 xoxox \"\n        let status = \"CatBot Loved \" + found\n        msg.status = status\n        msg.format = \"null\"\n        msg.command = [\n            \"catBotReact\"\n        ]\n        node.status({ fill: \"green\", shape: \"dot\", text: status });\n        return msg;\n    } \n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nnode.done();",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2110,8 +2142,8 @@
                 "t": "set",
                 "p": "topic",
                 "pt": "msg",
-                "to": "!bIFkpYcOyLPMeObKDS:markwr.com",
-                "tot": "str"
+                "to": "#:(file)::matrix.rooms.camerafeed",
+                "tot": "global"
             },
             {
                 "t": "set",
@@ -2776,87 +2808,6 @@
         ]
     },
     {
-        "id": "35919806d228a4d0",
-        "type": "matrix-send-message",
-        "z": "431f278d3dd31e78",
-        "d": true,
-        "g": "9692f2292e36e779",
-        "name": "",
-        "server": "57146ada2355e7df",
-        "roomId": "!vEUcVQjzehwHoHwJHc:markwr.com",
-        "message": "",
-        "messageType": "m.notice",
-        "messageFormat": "html",
-        "replaceMessage": false,
-        "x": 720,
-        "y": 540,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "37a42daf4686f2cf",
-        "type": "http request",
-        "z": "431f278d3dd31e78",
-        "d": true,
-        "g": "9692f2292e36e779",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "api-secret",
-                "valueType": "other",
-                "valueValue": "markwr-bb47aac8524d8e68"
-            },
-            {
-                "keyType": "other",
-                "keyValue": "accept",
-                "valueType": "other",
-                "valueValue": "application/json"
-            }
-        ],
-        "x": 510,
-        "y": 420,
-        "wires": [
-            [
-                "332afe8cc3f9f84a",
-                "ddff58edaa860225"
-            ]
-        ]
-    },
-    {
-        "id": "075aa026aef3f16f",
-        "type": "function",
-        "z": "431f278d3dd31e78",
-        "d": true,
-        "g": "9692f2292e36e779",
-        "name": "build URL",
-        "func": "let count = msg.payload.hours * 12\nlet base_url = global.get(\"nightscout.base_url\",\"file\")\nlet url_part1 = \"/api/v1/entries/sgv\" \nlet query = \"?count=\" + count\nmsg.url = base_url + url_part1 + query\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 300,
-        "y": 420,
-        "wires": [
-            [
-                "37a42daf4686f2cf"
-            ]
-        ]
-    },
-    {
         "id": "332afe8cc3f9f84a",
         "type": "debug",
         "z": "431f278d3dd31e78",
@@ -2924,7 +2875,7 @@
         "y": 420,
         "wires": [
             [
-                "075aa026aef3f16f"
+                "411e6fed817f6b02"
             ]
         ]
     },
@@ -2966,8 +2917,8 @@
             {
                 "keyType": "other",
                 "keyValue": "api-secret",
-                "valueType": "other",
-                "valueValue": "markwr-bb47aac8524d8e68"
+                "valueType": "msg",
+                "valueValue": "apisecret"
             },
             {
                 "keyType": "other",
@@ -2980,7 +2931,8 @@
         "y": 220,
         "wires": [
             [
-                "24a7e6ab83cc1708"
+                "24a7e6ab83cc1708",
+                "3fa5d4452fade10a"
             ]
         ]
     },
@@ -2990,7 +2942,7 @@
         "z": "431f278d3dd31e78",
         "g": "d1677d80792879be",
         "name": "build URL",
-        "func": "// let count = msg.payload.hours * 12\nlet count = 1\nlet base_url = global.get(\"nightscout.base_url\",\"file\")\nlet url_part1 = \"/api/v1/entries/sgv\" \nlet query = \"?count=\" + count\nmsg.url = base_url + url_part1 + query\nreturn msg;",
+        "func": "// let count = msg.payload.hours * 12\nlet count = 1\nlet base_url = global.get(\"nightscout.base_url\",\"file\")\nlet url_part1 = \"/api/v1/entries/sgv\" \nlet query = \"?count=\" + count\nmsg.url = base_url + url_part1 + query\nmsg.apisecret = global.get(\"nightscout.apisecret\",\"file\")\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3010,7 +2962,7 @@
         "z": "431f278d3dd31e78",
         "g": "d1677d80792879be",
         "name": "Sugar msg",
-        "func": "const sugar = msg.data.state + \" mmoll\"\nconst delta = msg.data.attributes.delta\nconst direction = msg.data.attributes.direction\nconst timeSince = msg.data.timeSinceChangedMs / 1000\nlet time\nif (timeSince < 60) {\n    time = Math.floor(timeSince) + \"s\"\n} else if (timeSince >= 60) {\n    let mins = Math.floor(timeSince / 60)\n    let secs = Math.floor(timeSince - (mins * 60))\n    time = mins + \"m \" + secs + \"s\"\n} else if (timeSince >= 3600) {\n    let hours = Math.floor(timeSince / (60 * 60))\n    let mins = Math.floor((timeSince / 60) - (hours * 60))\n    let secs = Math.floor(timeSince - ((hours * 60 * 60) + (mins * 60)))\n\n    time = hours + \"h \" + mins + \"m \" + secs + \"s\"\n}\nlet payload = \"<p>Meow!<br><br>Mark's Sugar is <b>\" + sugar + \"</b><br><br>It is <em>\" + direction + \"</em> (\" + delta + \")<br>Reading is \" + time + \" old\"\nlet rawpayload = \"Meow! Mark's Sugar is \" + sugar + \". It is \" + direction + \". Reading is \" + time + \" old\"\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Meow! \" + sugar });\nmsg.payload = rawpayload\nmsg.formatted_payload = payload\nmsg.format = \"html\"\nreturn msg\n",
+        "func": "const sugar = Math.round(( msg.payload[0].sgv / 18 ) *100) / 100 + \" mmoll\"\nconst delta = Math.round((msg.payload[0].delta / 18) * 100) / 100\nconst direction = msg.payload[0].direction\nconst now = Date.now() \nconst timeofreading = msg.payload[0].date\nconst timeSince = now - timeofreading\nlet time\nif (timeSince < 60) {\n    time = Math.floor(timeSince) + \"s\"\n} else if (timeSince >= 60) {\n    let mins = Math.floor(timeSince / 60)\n    let secs = Math.floor(timeSince - (mins * 60))\n    time = mins + \"m \" + secs + \"s\"\n} else if (timeSince >= 3600) {\n    let hours = Math.floor(timeSince / (60 * 60))\n    let mins = Math.floor((timeSince / 60) - (hours * 60))\n    let secs = Math.floor(timeSince - ((hours * 60 * 60) + (mins * 60)))\n\n    time = hours + \"h \" + mins + \"m \" + secs + \"s\"\n}\nlet payload = \"<p>Meow!<br><br>Mark's Sugar is <b>\" + sugar + \"</b><br><br>It is <em>\" + direction + \"</em> (\" + delta + \")<br>Reading is \" + time + \" old\"\nlet rawpayload = \"Meow! Mark's Sugar is \" + sugar + \". It is \" + direction + \". Reading is \" + time + \" old\"\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Meow! \" + sugar });\nmsg.payload = rawpayload\nmsg.formatted_payload = payload\nmsg.format = \"html\"\nreturn msg\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3104,6 +3056,81 @@
         "wires": [
             [
                 "7702aadf79d9809c"
+            ]
+        ]
+    },
+    {
+        "id": "3fa5d4452fade10a",
+        "type": "debug",
+        "z": "431f278d3dd31e78",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "411e6fed817f6b02",
+        "type": "function",
+        "z": "431f278d3dd31e78",
+        "d": true,
+        "name": "build URL",
+        "func": "// let count = msg.payload.hours * 12\nlet count = 1\nlet base_url = global.get(\"nightscout.base_url\",\"file\")\nlet url_part1 = \"/api/v1/entries/sgv\" \nlet query = \"?count=\" + count\nmsg.url = base_url + url_part1 + query\nmsg.apisecret = global.get(\"nightscout.apisecret\",\"file\")\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 420,
+        "wires": [
+            [
+                "236dccc523545536"
+            ]
+        ]
+    },
+    {
+        "id": "236dccc523545536",
+        "type": "http request",
+        "z": "431f278d3dd31e78",
+        "d": true,
+        "name": "Nightscout",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "api-secret",
+                "valueType": "msg",
+                "valueValue": "apisecret"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "accept",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 470,
+        "y": 420,
+        "wires": [
+            [
+                "ddff58edaa860225"
             ]
         ]
     },
