@@ -1050,10 +1050,10 @@
         "z": "f0657749fd958ec3",
         "g": "365de1913bf44b79",
         "name": "Change Profile Pic",
-        "func": "const action = [/\\bpic\\b/i, /\\bpicture\\b/i]\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0]) || trigger == \"timer\" && msg.chance < 0.2) {\n        let payload = \"Meow! I'm changing my purrfile picture!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"null\"\n        let base_url = global.get(\"matrix.base_url\", \"file\")\n        let url_part1 = \"/_synapse/admin/v1/room/\"\n        let room = global.get(\"matrix.rooms.catbotprofilepics\", \"file\")\n        let url_part2 = \"/media\"\n        msg.url = base_url + url_part1 + room + url_part2\n        return [msg, msg];\n    }\n}\nif (command[0] == \"help\") {\n    let words = action.toString()\n    words = words.replace(/(?<=\\\\)\\w?/g, \"\")\n    words = words.replace(/\\\\/g, \"\")\n    // words = words.replace(/\\\\\\w{n}/, \"\")\n    let arr = words.match(/\\w+(?=\\/)/g)\n    msg.debug = {\n        \"arr\": arr,\n        \"words\": words\n    }\n    let helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - change CatBot's profile picture </li>\"\n    if (msg.helpList) {\n        msg.helpList += helpText\n    } else {\n        msg.helpList = helpText\n    }\n    node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n    return [null, msg];\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\n    node.done();\n}",
+        "func": "// const action = [/\\bpic\\b/i, /\\bpicture\\b/i]\nconst action = context.get(\"action\") // ACTION WORDS ARE SET IN 'ON START TAB'\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0]) || trigger == \"timer\" && msg.chance < 0.2) {\n        let payload = \"Meow! I'm changing my purrfile picture!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"null\"\n        let base_url = global.get(\"matrix.base_url\", \"file\")\n        let url_part1 = \"/_synapse/admin/v1/room/\"\n        let room = global.get(\"matrix.rooms.catbotprofilepics\", \"file\")\n        let url_part2 = \"/media\"\n        msg.url = base_url + url_part1 + room + url_part2\n        return [msg, msg];\n    }\n}\nif (command[0] == \"help\") {\n    let words = action.toString()\n    words = words.replace(/(?<=\\\\)\\w?/g, \"\")\n    words = words.replace(/\\\\/g, \"\")\n    // words = words.replace(/\\\\\\w{n}/, \"\")\n    let arr = words.match(/\\w+(?=\\/)/g)\n    msg.debug = {\n        \"arr\": arr,\n        \"words\": words\n    }\n    let helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - change CatBot's profile picture </li>\"\n    if (msg.helpList) {\n        msg.helpList += helpText\n    } else {\n        msg.helpList = helpText\n    }\n    node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n    return [null, msg];\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\n    node.done();\n}",
         "outputs": 2,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nconst action = [/\\bpic\\b/i, /\\bpicture\\b/i]\ncontext.set(\"action\", action)\nlet words = action.toString()\nwords = words.replace(/(?<=\\\\)\\w?/g, \"\")\nwords = words.replace(/\\\\/g, \"\")\nlet arr = words.match(/\\w+(?=\\/)/g)\nlet helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - change CatBot's profile picture </li>\"\n// if (global.get(\"help\",\"file\")) {\n//     let helpList = global.get(\"help\",\"file\") + helpText\n//     global.set(\"help\",helpList,\"file\")\n// } else {\n//     global.set(\"help\", helpText, \"file\")\n//     }\nglobal.set(\"help.pics\", helpText, \"file\")\n",
         "finalize": "",
         "libs": [],
         "x": 190,
@@ -1114,9 +1114,7 @@
         "z": "f0657749fd958ec3",
         "g": "365de1913bf44b79",
         "name": "link in 10",
-        "links": [
-            "cd786afdef8f6a9b"
-        ],
+        "links": [],
         "x": 65,
         "y": 460,
         "wires": [
@@ -1209,7 +1207,8 @@
             "4a4f55c958968ec6",
             "54f2928fa17acc1b",
             "7702aadf79d9809c",
-            "c97134159eb99809"
+            "c97134159eb99809",
+            "cd786afdef8f6a9b"
         ],
         "x": 230,
         "y": 200,
@@ -1251,7 +1250,7 @@
         "z": "f0657749fd958ec3",
         "g": "bf02d8ff45864eda",
         "name": "!meow",
-        "func": "const wakeWord = /^!meow/i\nconst catBot = /^CatBot\\s*$/i\nconst help = /help/i\nconst user = msg.userId\nconst room = msg.topic\nlet message = msg.payload\nif (!user.includes(\"catbot\")) {\n    if (wakeWord.test(message) && !help.test(message) && message.length > 6) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg,null];\n    } else if (wakeWord.test(message) && help.test(message) || wakeWord.test(message) && message.length < 7 || catBot.test(message)) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        command.splice(0, 1, \"help\")\n        node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n        msg.command = command\n        msg.format = \"html\"\n        msg.payload = \"CatBot Kitty Helping\"\n        msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n        return [null,msg];\n    } else if (room == global.get(\"matrix.rooms.catbot\",\"file\")) {\n        let command = message.replace(wakeWord, '').split(' ')\n        if (help.test(message)) {\n            let command = message.replace(wakeWord, '').split(' ')\n            command.splice(0, 1, \"help\")\n            node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n            msg.command = command\n            msg.format = \"html\"\n            msg.payload = \"CatBot Kitty Helping\"\n            msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n            return [null, msg];\n        }\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg, null];\n    } else {\n        node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n        node.done();\n    }\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n    node.done();\n}\n",
+        "func": "const wakeWord = /^!meow/i\nconst catBot = /^CatBot\\s*$/i\nconst help = /help/i\nconst user = msg.userId\nconst room = msg.topic\nlet message = msg.payload\nif (!user.includes(\"catbot\")) {\n    if (wakeWord.test(message) && !help.test(message) && message.length > 6) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg,null];\n    } else if (wakeWord.test(message) && help.test(message) || wakeWord.test(message) && message.length < 7 || catBot.test(message)) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        command.splice(0, 1, \"help\")\n        node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n        msg.command = command\n        msg.format = \"html\"\n        msg.payload = \"CatBot Kitty Helping\"\n        msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n        let helpArr = Object.values(global.get(\"help\",\"file\"))\n        let helpList\n        for (let i = 0; i < helpArr.length; i++) {\n            if (i != 0) {\n                helpList += helpArr[i]\n            } else {\n                helpList = helpArr[i]\n            }\n        }\n        msg.helpList = helpList\n        return [null,msg];\n    } else if (room == global.get(\"matrix.rooms.catbot\",\"file\")) {\n        let command = message.replace(wakeWord, '').split(' ')\n        if (help.test(message)) {\n            let command = message.replace(wakeWord, '').split(' ')\n            command.splice(0, 1, \"help\")\n            node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n            msg.command = command\n            msg.format = \"html\"\n            msg.payload = \"CatBot Kitty Helping\"\n            msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n            let helpArr = Object.values(global.get(\"help\", \"file\"))\n            let helpList\n            for (let i = 0; i < helpArr.length; i++) {\n                helpList += helpArr[i]\n            }\n            msg.helpList = helpList\n            return [null, msg];\n        }\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg, null];\n    } else {\n        node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n        node.done();\n    }\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n    node.done();\n}\n",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -1277,7 +1276,7 @@
         "name": "Kitty help!",
         "mode": "link",
         "links": [
-            "6962e3536175de5a"
+            "c46d860f9d15df6f"
         ],
         "x": 470,
         "y": 100,
@@ -2699,10 +2698,10 @@
         "z": "431f278d3dd31e78",
         "g": "ee84ac078f839ee6",
         "name": "Meow Sugar",
-        "func": "const action = [/\\bsugar\\b/i, /\\bdiabetes\\b/i]\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0])) {\n        let payload = \"Meow! Sugar!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"html\"\n        return [msg, null];\n    }\n}\nif (command[0] == \"help\") {\n    let words = action.toString()\n    words = words.replace(/(?<=\\\\)\\w?/g, \"\")\n    words = words.replace(/\\\\/g, \"\")\n    let arr = words.match(/\\w+(?=\\/)/g)\n    let helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - CatBot reports Mark's sugar </li>\"\n    if (msg.helpList) {\n        msg.helpList += helpText\n    } else {\n        msg.helpList = helpText\n    }\n    node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n    return [null, msg];\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\n    node.done();\n}",
+        "func": "// const action = [/\\bsugar\\b/i, /\\bdiabetes\\b/i] \nconst action = context.get(\"action\") //ACTION WORDS SET IN ON START\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0])) {\n        let payload = \"Meow! Sugar!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"html\"\n        return [msg, null];\n    }\n}\nif (command[0] == \"help\") {\n    let words = action.toString()\n    words = words.replace(/(?<=\\\\)\\w?/g, \"\")\n    words = words.replace(/\\\\/g, \"\")\n    let arr = words.match(/\\w+(?=\\/)/g)\n    let helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - CatBot reports Mark's sugar </li>\"\n    if (msg.helpList) {\n        msg.helpList += helpText\n    } else {\n        msg.helpList = helpText\n    }\n    node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n    return [null, msg];\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\n    node.done();\n}",
         "outputs": 2,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nconst action = [/\\bsugar\\b/i, /\\bdiabetes\\b/i]\ncontext.set(\"action\", action)\nlet words = action.toString()\nwords = words.replace(/(?<=\\\\)\\w?/g, \"\")\nwords = words.replace(/\\\\/g, \"\")\nlet arr = words.match(/\\w+(?=\\/)/g)\nlet helpEnd = \"</em></b> - CatBot reports Mark's sugar </li>\"\nlet helpText = \"<li><b><em>\" + arr.toString() + helpEnd\n// if (global.get(\"help\", \"file\")) {\n//     let helpList = global.get(\"help\", \"file\") + helpText\n//     global.set(\"help\", helpList, \"file\")\n// } else {\n//     global.set(\"help\", helpText, \"file\")\n// }\nglobal.set(\"help.sugar\", helpText, \"file\")",
         "finalize": "",
         "libs": [],
         "x": 470,
@@ -2931,8 +2930,7 @@
         "y": 220,
         "wires": [
             [
-                "24a7e6ab83cc1708",
-                "3fa5d4452fade10a"
+                "24a7e6ab83cc1708"
             ]
         ]
     },
@@ -2962,7 +2960,7 @@
         "z": "431f278d3dd31e78",
         "g": "d1677d80792879be",
         "name": "Sugar msg",
-        "func": "const sugar = Math.round(( msg.payload[0].sgv / 18 ) *100) / 100 + \" mmoll\"\nconst delta = Math.round((msg.payload[0].delta / 18) * 100) / 100\nconst direction = msg.payload[0].direction\nconst now = Date.now() \nconst timeofreading = msg.payload[0].date\nconst timeSince = now - timeofreading\nlet time\nif (timeSince < 60) {\n    time = Math.floor(timeSince) + \"s\"\n} else if (timeSince >= 60) {\n    let mins = Math.floor(timeSince / 60)\n    let secs = Math.floor(timeSince - (mins * 60))\n    time = mins + \"m \" + secs + \"s\"\n} else if (timeSince >= 3600) {\n    let hours = Math.floor(timeSince / (60 * 60))\n    let mins = Math.floor((timeSince / 60) - (hours * 60))\n    let secs = Math.floor(timeSince - ((hours * 60 * 60) + (mins * 60)))\n\n    time = hours + \"h \" + mins + \"m \" + secs + \"s\"\n}\nlet payload = \"<p>Meow!<br><br>Mark's Sugar is <b>\" + sugar + \"</b><br><br>It is <em>\" + direction + \"</em> (\" + delta + \")<br>Reading is \" + time + \" old\"\nlet rawpayload = \"Meow! Mark's Sugar is \" + sugar + \". It is \" + direction + \". Reading is \" + time + \" old\"\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Meow! \" + sugar });\nmsg.payload = rawpayload\nmsg.formatted_payload = payload\nmsg.format = \"html\"\nreturn msg\n",
+        "func": "const sugar = Math.round(( msg.payload[0].sgv / 18 ) *100) / 100 + \" mmoll\"\nconst delta = Math.round((msg.payload[0].delta / 18) * 100) / 100\nconst direction = msg.payload[0].direction\nconst now = Date.now() / 1000\nconst timeofreading = msg.payload[0].date / 1000\nconst timeSince = now - timeofreading \nlet time\nif (timeSince < 60) {\n    time = Math.floor(timeSince) + \"s\"\n} else if (timeSince >= 60) {\n    let mins = Math.floor(timeSince / 60)\n    let secs = Math.floor(timeSince - (mins * 60))\n    time = mins + \"m \" + secs + \"s\"\n} else if (timeSince >= 3600) {\n    let hours = Math.floor(timeSince / (60 * 60))\n    let mins = Math.floor((timeSince / 60) - (hours * 60))\n    let secs = Math.floor(timeSince - ((hours * 60 * 60) + (mins * 60)))\n\n    time = hours + \"h \" + mins + \"m \" + secs + \"s\"\n}\nlet payload = \"<p>Meow!<br><br>Mark's Sugar is <b>\" + sugar + \"</b><br><br>It is <em>\" + direction + \"</em> (\" + delta + \")<br>Reading is \" + time + \" old\"\nlet rawpayload = \"Meow! Mark's Sugar is \" + sugar + \". It is \" + direction + \". Reading is \" + time + \" old\"\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Meow! \" + sugar });\nmsg.payload = rawpayload\nmsg.formatted_payload = payload\nmsg.format = \"html\"\nmsg.debug = {\n    \"time of reading\": timeofreading,\n    \"timesince\": timeSince\n}\nreturn msg\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
