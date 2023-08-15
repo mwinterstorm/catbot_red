@@ -233,13 +233,11 @@
             "f835ee553397b27c",
             "8c8d1ee7e18390dc",
             "81e3acc30812436c",
-            "a0f3ba7841d1f81c",
-            "6962e3536175de5a",
-            "2e9bc4986e964414"
+            "a0f3ba7841d1f81c"
         ],
-        "x": 24,
+        "x": 14,
         "y": 359,
-        "w": 842,
+        "w": 832,
         "h": 142
     },
     {
@@ -275,7 +273,7 @@
             "cd786afdef8f6a9b",
             "6a469a172b61ff41"
         ],
-        "x": 24,
+        "x": 14,
         "y": 19,
         "w": 532,
         "h": 122
@@ -290,15 +288,15 @@
         },
         "nodes": [
             "2521438a5cfd8a18",
-            "7702aadf79d9809c",
             "67dba891485db94d",
             "f29590b5392c254c",
-            "a7a0f52c5408e527"
+            "a7a0f52c5408e527",
+            "7702aadf79d9809c"
         ],
         "x": 94,
-        "y": 19,
-        "w": 712,
-        "h": 142
+        "y": 39,
+        "w": 542,
+        "h": 122
     },
     {
         "id": "98527aa7d133e812",
@@ -366,15 +364,15 @@
             "cc36f0ddead6ce1f",
             "dc1e6033779edab3",
             "20dde37c7b1b935d",
-            "35919806d228a4d0",
             "332afe8cc3f9f84a",
             "ddff58edaa860225",
-            "a65fa937977bea53"
+            "a65fa937977bea53",
+            "df0d394676e849a4"
         ],
         "x": 34,
         "y": 319,
         "w": 872,
-        "h": 262
+        "h": 202
     },
     {
         "id": "d1677d80792879be",
@@ -385,12 +383,12 @@
             "label": true
         },
         "nodes": [
-            "2401a823f24a269e",
             "24a7e6ab83cc1708",
             "c18be0ec6eeca8c3",
             "75e7d1e0947a9569",
             "054f16705c3e7976",
-            "6f1fbab3ef578ea5"
+            "6f1fbab3ef578ea5",
+            "2401a823f24a269e"
         ],
         "x": 14,
         "y": 179,
@@ -419,9 +417,9 @@
             "8b219f5c926c01b7"
         ],
         "x": 14,
-        "y": 39,
+        "y": 19,
         "w": 902,
-        "h": 282
+        "h": 262
     },
     {
         "id": "efb6f8252bfd93fc",
@@ -464,29 +462,26 @@
         "id": "1480b7b889901adc",
         "type": "group",
         "z": "98817579b4d43a21",
-        "name": "WIP",
+        "name": "Conversations",
         "style": {
             "label": true
         },
         "nodes": [
-            "831c45b932a8148f",
             "38650eec69417288",
-            "7cc40bd371bd0796",
             "734b8d33fedac998",
             "c0a0c01a35e96a82",
             "a8172d506c69e3fb",
             "452a883e7e8dfa4f",
-            "57a8f4cdd91a8975",
-            "0ac65ca9a86b1ab4",
-            "28465dd271117e15",
-            "f12b32c20ea2d017",
             "4515575ba6d1f2c7",
-            "4dabcaa9185e9af4"
+            "d55ac2c1abe5de1e",
+            "48504946d2c60c88",
+            "af1f4bfb62afed20",
+            "cea122cb533817f9"
         ],
-        "x": 54,
-        "y": 439,
-        "w": 732,
-        "h": 462
+        "x": 14,
+        "y": 299,
+        "w": 1032,
+        "h": 202
     },
     {
         "id": "cfb9292e374e6d97",
@@ -971,7 +966,7 @@
         "g": "365de1913bf44b79",
         "name": "Edit CatBot",
         "server": "57146ada2355e7df",
-        "x": 770,
+        "x": 750,
         "y": 460,
         "wires": [
             [],
@@ -991,7 +986,7 @@
         "septopics": true,
         "property": "payload",
         "topi": "eventId",
-        "x": 610,
+        "x": 590,
         "y": 460,
         "wires": [
             [
@@ -1011,7 +1006,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 600,
+        "x": 740,
         "y": 400,
         "wires": [
             [
@@ -1036,7 +1031,7 @@
         "authType": "bearer",
         "senderr": false,
         "headers": [],
-        "x": 380,
+        "x": 540,
         "y": 400,
         "wires": [
             [
@@ -1050,20 +1045,17 @@
         "z": "f0657749fd958ec3",
         "g": "365de1913bf44b79",
         "name": "Change Profile Pic",
-        "func": "// const action = [/\\bpic\\b/i, /\\bpicture\\b/i]\nconst action = context.get(\"action\") // ACTION WORDS ARE SET IN 'ON START TAB'\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0]) || trigger == \"timer\" && msg.chance < 0.2) {\n        let payload = \"Meow! I'm changing my purrfile picture!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"null\"\n        let base_url = global.get(\"matrix.base_url\", \"file\")\n        let url_part1 = \"/_synapse/admin/v1/room/\"\n        let room = global.get(\"matrix.rooms.catbotprofilepics\", \"file\")\n        let url_part2 = \"/media\"\n        msg.url = base_url + url_part1 + room + url_part2\n        return [msg, msg];\n    }\n}\nif (command[0] == \"help\") {\n    let words = action.toString()\n    words = words.replace(/(?<=\\\\)\\w?/g, \"\")\n    words = words.replace(/\\\\/g, \"\")\n    // words = words.replace(/\\\\\\w{n}/, \"\")\n    let arr = words.match(/\\w+(?=\\/)/g)\n    msg.debug = {\n        \"arr\": arr,\n        \"words\": words\n    }\n    let helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - change CatBot's profile picture </li>\"\n    if (msg.helpList) {\n        msg.helpList += helpText\n    } else {\n        msg.helpList = helpText\n    }\n    node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n    return [null, msg];\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\n    node.done();\n}",
-        "outputs": 2,
+        "func": "const action = context.get(\"action\") // ACTION WORDS ARE SET IN 'ON START TAB'\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0]) || trigger == \"timer\" && msg.chance < 0.2) {\n        let payload = \"Meow! I'm changing my purrfile picture!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"null\"\n        let base_url = global.get(\"matrix.base_url\", \"file\")\n        let url_part1 = \"/_synapse/admin/v1/room/\"\n        let room = global.get(\"matrix.rooms.catbotprofilepics\", \"file\")\n        let url_part2 = \"/media\"\n        msg.url = base_url + url_part1 + room + url_part2\n        return msg;\n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\nnode.done();\n",
+        "outputs": 1,
         "noerr": 0,
-        "initialize": "// Code added here will be run once\n// whenever the node is started.\nconst action = [/\\bpic\\b/i, /\\bpicture\\b/i]\ncontext.set(\"action\", action)\nlet words = action.toString()\nwords = words.replace(/(?<=\\\\)\\w?/g, \"\")\nwords = words.replace(/\\\\/g, \"\")\nlet arr = words.match(/\\w+(?=\\/)/g)\nlet helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - change CatBot's profile picture </li>\"\n// if (global.get(\"help\",\"file\")) {\n//     let helpList = global.get(\"help\",\"file\") + helpText\n//     global.set(\"help\",helpList,\"file\")\n// } else {\n//     global.set(\"help\", helpText, \"file\")\n//     }\nglobal.set(\"help.pics\", helpText, \"file\")\n",
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nconst action = [/\\bpic\\b/i, /\\bpicture\\b/i]\ncontext.set(\"action\", action)\nlet words = action.toString()\nwords = words.replace(/(?<=\\\\)\\w?/g, \"\")\nwords = words.replace(/\\\\/g, \"\")\nlet arr = words.match(/\\w+(?=\\/)/g)\nlet helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - change CatBot's profile picture </li>\"\nglobal.set(\"help.pics\", helpText, \"file\")\n",
         "finalize": "",
         "libs": [],
-        "x": 190,
-        "y": 460,
+        "x": 330,
+        "y": 400,
         "wires": [
             [
                 "8c8d1ee7e18390dc"
-            ],
-            [
-                "2e9bc4986e964414"
             ]
         ]
     },
@@ -1100,42 +1092,13 @@
         "once": true,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 170,
+        "x": 130,
         "y": 400,
         "wires": [
             [
                 "81e3acc30812436c"
             ]
         ]
-    },
-    {
-        "id": "6962e3536175de5a",
-        "type": "link in",
-        "z": "f0657749fd958ec3",
-        "g": "365de1913bf44b79",
-        "name": "link in 10",
-        "links": [],
-        "x": 65,
-        "y": 460,
-        "wires": [
-            [
-                "81e3acc30812436c"
-            ]
-        ]
-    },
-    {
-        "id": "2e9bc4986e964414",
-        "type": "link out",
-        "z": "f0657749fd958ec3",
-        "g": "365de1913bf44b79",
-        "name": "link out 25",
-        "mode": "link",
-        "links": [
-            "34bf1b89086ee69f"
-        ],
-        "x": 325,
-        "y": 460,
-        "wires": []
     },
     {
         "id": "6f740e2472598671",
@@ -1164,7 +1127,7 @@
         "z": "f0657749fd958ec3",
         "g": "3e2776170b75bf6a",
         "name": "format html",
-        "func": "const format = msg.format\nconst command = msg.command[0]\nif (command == \"help\") {\n    let helplist = msg.helpList\n    helplist = helplist + \"<li><b><em> help </em></b> - ask for CatBot's Kitty Help </li>\"\n    msg.formatted_payload = msg.formatted_payload + \"<ul>\" + helplist + \"</ul>\"\n}\nif (format == \"html\") {\n    let htmlmessage = \"<body>\" + msg.formatted_payload + \"</body>\"\n    msg.formatted_payload = htmlmessage\n}\nreturn msg;",
+        "func": "const format = msg.format\nif (format == \"html\") {\n    let htmlmessage = \"<body>\" + msg.formatted_payload + \"</body>\"\n    msg.formatted_payload = htmlmessage\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1208,7 +1171,10 @@
             "54f2928fa17acc1b",
             "7702aadf79d9809c",
             "c97134159eb99809",
-            "cd786afdef8f6a9b"
+            "cd786afdef8f6a9b",
+            "12db1c3b997c251e",
+            "48504946d2c60c88",
+            "cfb86be45d1fb3cf"
         ],
         "x": 230,
         "y": 200,
@@ -1236,7 +1202,7 @@
         "acceptImages": false,
         "acceptVideos": false,
         "acceptLocations": false,
-        "x": 130,
+        "x": 120,
         "y": 60,
         "wires": [
             [
@@ -1250,17 +1216,16 @@
         "z": "f0657749fd958ec3",
         "g": "bf02d8ff45864eda",
         "name": "!meow",
-        "func": "const wakeWord = /^!meow/i\nconst catBot = /^CatBot\\s*$/i\nconst help = /help/i\nconst user = msg.userId\nconst room = msg.topic\nlet message = msg.payload\nif (!user.includes(\"catbot\")) {\n    if (wakeWord.test(message) && !help.test(message) && message.length > 6) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg,null];\n    } else if (wakeWord.test(message) && help.test(message) || wakeWord.test(message) && message.length < 7 || catBot.test(message)) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        command.splice(0, 1, \"help\")\n        node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n        msg.command = command\n        msg.format = \"html\"\n        msg.payload = \"CatBot Kitty Helping\"\n        msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n        let helpArr = Object.values(global.get(\"help\",\"file\"))\n        let helpList\n        for (let i = 0; i < helpArr.length; i++) {\n            if (i != 0) {\n                helpList += helpArr[i]\n            } else {\n                helpList = helpArr[i]\n            }\n        }\n        msg.helpList = helpList\n        return [null,msg];\n    } else if (room == global.get(\"matrix.rooms.catbot\",\"file\")) {\n        let command = message.replace(wakeWord, '').split(' ')\n        if (help.test(message)) {\n            let command = message.replace(wakeWord, '').split(' ')\n            command.splice(0, 1, \"help\")\n            node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n            msg.command = command\n            msg.format = \"html\"\n            msg.payload = \"CatBot Kitty Helping\"\n            msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n            let helpArr = Object.values(global.get(\"help\", \"file\"))\n            let helpList\n            for (let i = 0; i < helpArr.length; i++) {\n                helpList += helpArr[i]\n            }\n            msg.helpList = helpList\n            return [null, msg];\n        }\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg, null];\n    } else {\n        node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n        node.done();\n    }\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n    node.done();\n}\n",
+        "func": "const wakeWord = /^!meow/i\nconst catBot = /^CatBot\\s*$/i\nconst help = /help/i\nconst user = msg.userId\nconst room = msg.topic\nlet message = msg.payload\nif (!user.includes(\"catbot\")) {\n    if (wakeWord.test(message) && !help.test(message) && message.length > 6) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg,null];\n    } else if (wakeWord.test(message) && help.test(message) || wakeWord.test(message) && message.length < 7 || catBot.test(message)) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        command.splice(0, 1, \"help\")\n        node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n        msg.command = command\n        msg.format = \"html\"\n        msg.payload = \"CatBot Kitty Helping\"\n        msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n        let helpArr = Object.values(global.get(\"help\",\"file\"))\n        let helpList\n        for (let i = 0; i < helpArr.length; i++) {\n            if (i != 0) {\n                helpList += helpArr[i]\n            } else {\n                helpList = helpArr[i]\n            }\n        }\n        helpList = helpList + \"<li><b><em> help </em></b> - ask for CatBot's Kitty Help </li>\"\n        msg.formatted_payload = msg.formatted_payload + \"<ul>\" + helpList + \"</ul>\"\n        return [null,msg];\n    } else if (room == global.get(\"matrix.rooms.catbot\",\"file\")) {\n        let command = message.replace(wakeWord, '').split(' ')\n        if (help.test(message)) {\n            let command = message.replace(wakeWord, '').split(' ')\n            command.splice(0, 1, \"help\")\n            node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n            msg.command = command\n            msg.format = \"html\"\n            msg.payload = \"CatBot Kitty Helping\"\n            msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n            let helpArr = Object.values(global.get(\"help\", \"file\"))\n            let helpList\n            for (let i = 0; i < helpArr.length; i++) {\n                helpList += helpArr[i]\n            }\n            helpList = helpList + \"<li><b><em> help </em></b> - ask for CatBot's Kitty Help </li>\"\n            msg.formatted_payload = msg.formatted_payload + \"<ul>\" + helpList + \"</ul>\"\n            return [null, msg];\n        }\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg, null];\n    } else {\n        node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n        node.done();\n    }\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n    node.done();\n}\n",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 300,
+        "x": 290,
         "y": 60,
         "wires": [
             [
-                "cd786afdef8f6a9b",
                 "6a469a172b61ff41"
             ],
             [
@@ -1278,7 +1243,7 @@
         "links": [
             "c46d860f9d15df6f"
         ],
-        "x": 470,
+        "x": 460,
         "y": 100,
         "wires": [],
         "l": true
@@ -1293,9 +1258,10 @@
         "links": [
             "34bf1b89086ee69f",
             "3142187b733d14ae",
-            "67dba891485db94d"
+            "67dba891485db94d",
+            "d55ac2c1abe5de1e"
         ],
-        "x": 460,
+        "x": 450,
         "y": 60,
         "wires": [],
         "l": true
@@ -1356,7 +1322,9 @@
         "z": "f0657749fd958ec3",
         "g": "efb6f8252bfd93fc",
         "name": "Receive emote to send",
-        "links": [],
+        "links": [
+            "cea122cb533817f9"
+        ],
         "x": 660,
         "y": 300,
         "wires": [
@@ -1437,58 +1405,6 @@
         ]
     },
     {
-        "id": "c180c3fa894790af",
-        "type": "inject",
-        "z": "af4923605b6d1997",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 700,
-        "y": 40,
-        "wires": [
-            [
-                "fa8779242637853c"
-            ]
-        ]
-    },
-    {
-        "id": "fa8779242637853c",
-        "type": "change",
-        "z": "af4923605b6d1997",
-        "name": "",
-        "rules": [
-            {
-                "t": "delete",
-                "p": "#:(file)::matrix.base_uel",
-                "pt": "global"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 760,
-        "y": 120,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "66bfd08bfa9cb39c",
         "type": "credentials",
         "z": "af4923605b6d1997",
@@ -1527,51 +1443,17 @@
         ]
     },
     {
-        "id": "7bb7470aae1fd79a",
-        "type": "subflow:55dc99b1c7d46138",
-        "z": "98817579b4d43a21",
-        "d": true,
-        "name": "",
-        "x": 230,
-        "y": 380,
-        "wires": [
-            [],
-            [
-                "54f2928fa17acc1b"
-            ]
-        ],
-        "outputLabels": [
-            "Reaction",
-            "Message"
-        ]
-    },
-    {
-        "id": "54f2928fa17acc1b",
-        "type": "link out",
-        "z": "98817579b4d43a21",
-        "d": true,
-        "name": "to Send Message",
-        "mode": "link",
-        "links": [
-            "c46d860f9d15df6f"
-        ],
-        "x": 470,
-        "y": 380,
-        "wires": [],
-        "l": true
-    },
-    {
         "id": "d2f7a50b7488ad6f",
         "type": "inject",
         "z": "98817579b4d43a21",
         "g": "a19998c49682db6c",
-        "name": "try every ~11 minutes",
+        "name": "try every ~5.5 minutes",
         "props": [
             {
                 "p": "payload"
             }
         ],
-        "repeat": "666",
+        "repeat": "333",
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
@@ -1579,7 +1461,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 170,
-        "y": 80,
+        "y": 60,
         "wires": [
             [
                 "844f61454379e575"
@@ -1600,7 +1482,7 @@
             }
         ],
         "x": 350,
-        "y": 100,
+        "y": 80,
         "wires": [
             [
                 "1faa3f147aa0a960"
@@ -1629,7 +1511,7 @@
         "senderr": false,
         "headers": [],
         "x": 510,
-        "y": 80,
+        "y": 60,
         "wires": [
             [
                 "64b93e55cdf51c4a"
@@ -1656,7 +1538,7 @@
         "repair": false,
         "outputs": 2,
         "x": 680,
-        "y": 80,
+        "y": 60,
         "wires": [
             [
                 "ed39f39824ad88ca",
@@ -1680,7 +1562,7 @@
         "startOffset": "57",
         "endOffset": 0,
         "x": 570,
-        "y": 140,
+        "y": 120,
         "wires": [
             [
                 "402c4e72eb9aa7ef"
@@ -1730,7 +1612,7 @@
         "to": "",
         "reg": false,
         "x": 760,
-        "y": 140,
+        "y": 120,
         "wires": [
             [
                 "b6762903c57fbf2a"
@@ -1748,7 +1630,7 @@
             "c46d860f9d15df6f"
         ],
         "x": 730,
-        "y": 280,
+        "y": 240,
         "wires": [],
         "l": true
     },
@@ -1758,14 +1640,14 @@
         "z": "98817579b4d43a21",
         "g": "a19998c49682db6c",
         "name": "Add CatBot intro",
-        "func": "let text = msg.payload.text\nlet payload = \"Meow! Time for a cat fact!!! 😻 \" + text\nreturn msg;",
+        "func": "let text = msg.payload.text\nlet payload = \"Meow! Time for a cat fact!!! 😻 \" + text\nmsg.payload = payload\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 710,
-        "y": 220,
+        "y": 180,
         "wires": [
             [
                 "c97134159eb99809"
@@ -1787,7 +1669,7 @@
         "statusVal": "",
         "statusType": "counter",
         "x": 845,
-        "y": 80,
+        "y": 60,
         "wires": [],
         "l": false
     },
@@ -1806,7 +1688,7 @@
         "statusVal": "",
         "statusType": "counter",
         "x": 855,
-        "y": 200,
+        "y": 180,
         "wires": [],
         "l": false
     },
@@ -1825,7 +1707,7 @@
         "statusVal": "",
         "statusType": "counter",
         "x": 425,
-        "y": 180,
+        "y": 160,
         "wires": [],
         "l": false
     },
@@ -1833,178 +1715,59 @@
         "id": "4515575ba6d1f2c7",
         "type": "function",
         "z": "98817579b4d43a21",
-        "d": true,
         "g": "1480b7b889901adc",
-        "name": "React to Cats",
-        "func": "const cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst found = message.match(cats)\nfor (let i = 0; i < cats.length; i++) {\n    if (message.match(cats[i])) {\n        msg.payload = \"😻\"\n        msg.status = \"Cat Found 😻\"\n        return msg;\n    }\n}\nnode.done()",
+        "name": "Emotes",
+        "func": "const message = msg.payload\n// CATS \nconst cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nfor (let i = 0; i < cats.length; i++) {\n    if (message.match(cats[i])) {\n        msg.payload = \"😻\"\n        node.status({ fill: \"green\", shape: \"dot\", text: \"Cat Found 😻\" });\n        return msg;\n    }\n}\n// DOGS\nconst dogs = [\n    /\\b(Magny)/g,\n    /\\b(dog\\w?|doggy\\w?|doggies|puppy\\w?|puppies)\\b/gi,\n]\nfor (let i = 0; i < dogs.length; i++) {\n    if (message.match(dogs[i])) {\n        msg.payload = \"😾\"\n        node.status({ fill: \"green\", shape: \"dot\", text: \"Dog Found 😾\" });\n        return msg;\n    }\n}\n// VOMIT\nconst vomit = [\n    /\\b(Jane)/g,\n    /\\b(upstairs\\s?neighbours|guy\\s?upstairs|noise\\s?upstairs|upstairs\\s?noise|going\\s?on\\s?upstairs)\\b/gi,\n    /\\b(Capgemni|work)\\b/gi\n]\nfor (let i = 0; i < vomit.length; i++) {\n    if (message.match(vomit[i])) {\n        msg.payload = \"🤮\"\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Vomited\" });\n        return msg;\n    }\n}\n// Holiday\nconst holiday = [\n    /\\b(Bali|Ubud|Indonesia|Seminyak|Uluwatu)\\b/g,\n    /\\b(holiday\\w?|time\\s?off)\\b/gi,\n]\nfor (let i = 0; i < holiday.length; i++) {\n    if (message.match(holiday[i])) {\n        msg.payload = \"😎\"\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot is cool\" });\n        return msg;\n    }\n}\n// Catbot\nconst catbot = [\n    /\\b(Cat[bB]ot)/g,\n]\nfor (let i = 0; i < catbot.length; i++) {\n    if (message.match(catbot[i])) {\n        msg.payload = \"🐱\"\n        node.status({ fill: \"green\", shape: \"dot\", text: \"Catbot Found 🐱\" });\n        return msg;\n    }\n}\n// WORDLE\nconst wordle = [\n    /\\b(Wordle)\\b/gi,\n]\nconst close = /\\b(Wordle\\s+\\d*\\s+[5-6])/gi\nconst great = /\\b(Wordle\\s+\\d*\\s+[1-2])/gi\nfor (let i = 0; i < wordle.length; i++) {\n    if (message.match(wordle[i])) {\n        if (close.test(message)) {\n            msg.payload = \"🙀\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        } else if (great.test(message)) {\n            msg.payload = \"🥳\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        } else {\n            msg.payload = \"🤓\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        }\n    }\n}\nnode.done()",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 480,
+        "x": 560,
+        "y": 340,
         "wires": [
             [
-                "7cc40bd371bd0796",
-                "734b8d33fedac998"
+                "af1f4bfb62afed20"
             ]
-        ]
-    },
-    {
-        "id": "f12b32c20ea2d017",
-        "type": "function",
-        "z": "98817579b4d43a21",
-        "d": true,
-        "g": "1480b7b889901adc",
-        "name": "React to Dogs",
-        "func": "const search = [\n    /\\b(Magny)/g,\n    /\\b(dog\\w?|doggy\\w?|doggies|puppy\\w?|puppies)\\b/gi,\n]\nconst message = msg.payload\nconst found = message.match(search)\nfor (let i = 0; i < search.length; i++) {\n    if (message.match(search[i])) {\n            msg.payload = \"😾\"\n            msg.status = \"Dog Found 😾\"\n            return msg;\n    }\n}\nnode.done()",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 400,
-        "y": 520,
-        "wires": [
-            [
-                "7cc40bd371bd0796",
-                "734b8d33fedac998"
-            ]
-        ]
-    },
-    {
-        "id": "831c45b932a8148f",
-        "type": "function",
-        "z": "98817579b4d43a21",
-        "d": true,
-        "g": "1480b7b889901adc",
-        "name": "Vomit",
-        "func": "const search = [\n    /\\b(Jane)/g,\n    /\\b(upstairs\\s?neighbours|guy\\s?upstairs|noise\\s?upstairs|upstairs\\s?noise|going\\s?on\\s?upstairs)\\b/gi,\n]\nconst message = msg.payload\nconst found = message.match(search)\nfor (let i = 0; i < search.length; i++) {\n    if (message.match(search[i])) {\n        msg.payload = \"🤮\"\n        msg.status = \"CatBot Vomited\"\n        return msg;\n    }\n}\nnode.done()",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 370,
-        "y": 560,
-        "wires": [
-            [
-                "7cc40bd371bd0796",
-                "734b8d33fedac998"
-            ]
-        ]
-    },
-    {
-        "id": "28465dd271117e15",
-        "type": "function",
-        "z": "98817579b4d43a21",
-        "d": true,
-        "g": "1480b7b889901adc",
-        "name": "React to Holiday",
-        "func": "const search = [\n    /\\b(Bali|Ubud|Indonesia|Seminyak|Uluwatu)\\b/g,\n    /\\b(holiday\\w?|time\\s?off)\\b/gi,\n]\nconst message = msg.payload\nconst found = message.match(search)\nfor (let i = 0; i < search.length; i++) {\n    if (message.match(search[i])) {\n        msg.payload = \"😎\"\n        msg.status = \"CatBot is cool\"\n        return msg;\n    }\n}\nnode.done()",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 410,
-        "y": 600,
-        "wires": [
-            [
-                "7cc40bd371bd0796",
-                "734b8d33fedac998"
-            ]
-        ]
-    },
-    {
-        "id": "7cc40bd371bd0796",
-        "type": "change",
-        "z": "98817579b4d43a21",
-        "d": true,
-        "g": "1480b7b889901adc",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "status",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 680,
-        "y": 680,
-        "wires": [
-            []
         ]
     },
     {
         "id": "c0a0c01a35e96a82",
         "type": "function",
         "z": "98817579b4d43a21",
-        "d": true,
         "g": "1480b7b889901adc",
         "name": "Love Kitties 8% of time",
-        "func": "const cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nconst catbot = \"@bot.catbot:\" + global.get(\"matrix.domain\",\"file\")\nfor (let i = 0; i < cats.length; i++) {\nconst found = message.match(cats[i])\n    if (message.match(cats[i]) && Math.random() <= 0.08 && user != catbot) {\n        msg.payload = \"Meow! I Love \" + found + \" 😻 xoxox \"\n        let status = \"CatBot Loved \" + found\n        msg.status = status\n        msg.format = \"null\"\n        msg.command = [\n            \"catBotReact\"\n        ]\n        node.status({ fill: \"green\", shape: \"dot\", text: status });\n        return msg;\n    } \n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nnode.done();",
+        "func": "const cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nconst catbot = \"@bot.catbot:\" + global.get(\"matrix.domain\",\"file\")\nfor (let i = 0; i < cats.length; i++) {\nconst found = message.match(cats[i])\n    if (message.match(cats[i]) && Math.random() <= 0.08 && user != catbot) {\n        msg.payload = \"Meow! I Love \" + found + \" 😻 xoxox \"\n        let status = \"CatBot Loved \" + found\n        msg.format = \"null\"\n        msg.command = [\n            \"catBotReact\"\n        ]\n        node.status({ fill: \"green\", shape: \"dot\", text: status });\n        return msg;\n    } \n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 230,
-        "y": 780,
+        "x": 180,
+        "y": 400,
         "wires": [
             [
-                "7cc40bd371bd0796",
-                "4dabcaa9185e9af4"
+                "452a883e7e8dfa4f"
             ]
-        ]
-    },
-    {
-        "id": "4dabcaa9185e9af4",
-        "type": "rbe",
-        "z": "98817579b4d43a21",
-        "d": true,
-        "g": "1480b7b889901adc",
-        "name": "",
-        "func": "rbe",
-        "gap": "",
-        "start": "",
-        "inout": "out",
-        "septopics": true,
-        "property": "payload",
-        "topi": "eventId",
-        "x": 690,
-        "y": 820,
-        "wires": [
-            []
         ]
     },
     {
         "id": "a8172d506c69e3fb",
         "type": "function",
         "z": "98817579b4d43a21",
-        "d": true,
         "g": "1480b7b889901adc",
         "name": "Miss / Love Marissa 12.5% of time",
-        "func": "const search = [\n    /\\b(miss\\s?you|love\\s?you)\\b/gi,\n    // /\\b(Thatcher|Thatchy|Thatch)/g,\n    // /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nlet marissa = /marissa/i\nif (marissa.test(user)) {\n    for (let i = 0; i < search.length; i++) {\n        const found = message.match(search[i])\n        if (message.match(search[i]) && Math.random() <= 0.125) {\n            msg.payload = \"Meow! 😻 I \" + found + \" too Marissa xoxo\"\n            let status = \"Miss/Love Marissa\"\n            msg.status = status\n            msg.format = \"null\"\n            msg.command = [\n                \"catBotReact\"\n            ]\n            node.status({ fill: \"green\", shape: \"dot\", text: status });\n            return msg;\n        } \n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nnode.done();",
+        "func": "const search = [\n    /\\b(miss\\s?you|love\\s?you)\\b/gi,\n    // /\\b(Thatcher|Thatchy|Thatch)/g,\n    // /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nlet marissa = /marissa/i\nif (marissa.test(user)) {\n    for (let i = 0; i < search.length; i++) {\n        const found = message.match(search[i])\n        if (message.match(search[i]) && Math.random() <= 0.125) {\n            msg.payload = \"Meow! 😻 I \" + found + \" too Marissa xoxo\"\n            let status = \"Miss/Love Marissa\"\n            msg.status = status\n            msg.format = \"null\"\n            msg.command = [\n                \"catBotReact\"\n            ]\n            node.status({ fill: \"green\", shape: \"dot\", text: status });\n            return msg;\n        } \n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\n// return msg;\nnode.done();",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 260,
-        "y": 820,
+        "x": 220,
+        "y": 460,
         "wires": [
             [
-                "4dabcaa9185e9af4",
-                "7cc40bd371bd0796"
+                "734b8d33fedac998"
             ]
         ]
     },
@@ -2012,21 +1775,19 @@
         "id": "452a883e7e8dfa4f",
         "type": "function",
         "z": "98817579b4d43a21",
-        "d": true,
         "g": "1480b7b889901adc",
         "name": "Comment on Holiday 35% of time",
-        "func": "const search = [\n    /\\b(Bali|Ubud|Indonesia|Seminyak|Uluwatu|Hawkes\\s?Bay)\\b/g,\n]\n\nconst message = msg.payload\nconst user = msg.userId\nlet bot = /bot/i\nif (!bot.test(user)) {\n    for (let i = 0; i < search.length; i++) {\n        const found = message.match(search[i])\n        const response = [\n            \"I've packed my bags! 200 pairs of kitty sunglasses!!!! xoxoxo\",\n            \"Cat wait to travel to \" + found + \" with you\",\n            \"Is it furr to travel to \" + found + \"?\",\n            \"🛫✈️✈️✈️✈️✈️🛬🏖️🍹🏊️😻\",\n            \"Are we there yet?\",\n        ]\n        if (message.match(search[i]) && Math.random() <= 0.35) {\n            let index = Math.floor(Math.random() * response.length)\n            msg.payload = \"Meow! \" + response[index]\n            let status = \"CatBot comments on holiday\"\n            msg.status = status\n            msg.format = \"null\"\n            msg.command = [\n                \"catBotReact\"\n            ]\n            node.status({ fill: \"green\", shape: \"dot\", text: status });\n            return msg;\n        }\n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nnode.done();",
+        "func": "const search = [\n    /\\b(Bali|Ubud|Indonesia|Seminyak|Uluwatu|Hawkes\\s?Bay)\\b/g,\n]\n\nconst message = msg.payload\nconst user = msg.userId\nlet bot = /bot/i\nif (!bot.test(user)) {\n    for (let i = 0; i < search.length; i++) {\n        const found = message.match(search[i])\n        const response = [\n            \"I've packed my bags! 200 pairs of kitty sunglasses!!!! xoxoxo\",\n            \"Cat wait to travel to \" + found + \" with you\",\n            \"Is it furr to travel to \" + found + \"?\",\n            \"🛫✈️✈️✈️✈️✈️🛬🏖️🍹🏊️😻\",\n            \"Are we there yet?\",\n        ]\n        if (message.match(search[i]) && Math.random() <= 0.35) {\n            let index = Math.floor(Math.random() * response.length)\n            msg.payload = \"Meow! \" + response[index]\n            let status = \"CatBot comments on holiday\"\n            msg.format = \"null\"\n            msg.command = [\n                \"catBotReact\"\n            ]\n            node.status({ fill: \"green\", shape: \"dot\", text: status });\n            return msg;\n        }\n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\n// node.done();\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 260,
-        "y": 860,
+        "x": 460,
+        "y": 400,
         "wires": [
             [
-                "4dabcaa9185e9af4",
-                "7cc40bd371bd0796"
+                "a8172d506c69e3fb"
             ]
         ]
     },
@@ -2034,7 +1795,6 @@
         "id": "38650eec69417288",
         "type": "rbe",
         "z": "98817579b4d43a21",
-        "d": true,
         "g": "1480b7b889901adc",
         "name": "",
         "func": "rbe",
@@ -2044,62 +1804,12 @@
         "septopics": true,
         "property": "payload",
         "topi": "eventId",
-        "x": 130,
-        "y": 640,
+        "x": 370,
+        "y": 340,
         "wires": [
             [
                 "c0a0c01a35e96a82",
-                "a8172d506c69e3fb",
-                "452a883e7e8dfa4f",
-                "57a8f4cdd91a8975",
-                "0ac65ca9a86b1ab4",
-                "28465dd271117e15",
-                "831c45b932a8148f",
-                "f12b32c20ea2d017",
                 "4515575ba6d1f2c7"
-            ]
-        ]
-    },
-    {
-        "id": "0ac65ca9a86b1ab4",
-        "type": "function",
-        "z": "98817579b4d43a21",
-        "d": true,
-        "g": "1480b7b889901adc",
-        "name": "React to CatBot",
-        "func": "const cats = [\n    /\\b(Cat[bB]ot)/g,\n]\nconst message = msg.payload\nconst found = message.match(cats)\nfor (let i = 0; i < cats.length; i++) {\n    if (message.match(cats[i])) {\n        msg.payload = \"🐱\"\n        msg.status = \"Cat Found 🐱\"\n        return msg;\n    }\n}\nnode.done()",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 400,
-        "y": 640,
-        "wires": [
-            [
-                "7cc40bd371bd0796",
-                "734b8d33fedac998"
-            ]
-        ]
-    },
-    {
-        "id": "57a8f4cdd91a8975",
-        "type": "function",
-        "z": "98817579b4d43a21",
-        "d": true,
-        "g": "1480b7b889901adc",
-        "name": "React to Wordle",
-        "func": "const search = [\n    /\\b(Wordle)\\b/gi,\n]\nconst close = /\\b(Wordle\\s+\\d*\\s+[5-6])/gi\nconst great = /\\b(Wordle\\s+\\d*\\s+[1-2])/gi\nconst message = msg.payload\nconst found = message.match(search)\nfor (let i = 0; i < search.length; i++) {\n    if (message.match(search[i])) {\n        if (close.test(message)) {\n            msg.payload = \"🙀\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        } else if (great.test(message)) {\n            msg.payload = \"🥳\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        } else {\n            msg.payload = \"🤓\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        }\n    }\n}\nnode.done()",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 400,
-        "y": 680,
-        "wires": [
-            [
-                "734b8d33fedac998"
             ]
         ]
     },
@@ -2107,7 +1817,6 @@
         "id": "734b8d33fedac998",
         "type": "rbe",
         "z": "98817579b4d43a21",
-        "d": true,
         "g": "1480b7b889901adc",
         "name": "",
         "func": "rbe",
@@ -2117,11 +1826,82 @@
         "septopics": true,
         "property": "payload",
         "topi": "eventId",
-        "x": 690,
-        "y": 600,
+        "x": 450,
+        "y": 460,
         "wires": [
-            []
+            [
+                "48504946d2c60c88"
+            ]
         ]
+    },
+    {
+        "id": "d55ac2c1abe5de1e",
+        "type": "link in",
+        "z": "98817579b4d43a21",
+        "g": "1480b7b889901adc",
+        "name": "Receive Message to process",
+        "links": [
+            "6a469a172b61ff41"
+        ],
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "38650eec69417288"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "48504946d2c60c88",
+        "type": "link out",
+        "z": "98817579b4d43a21",
+        "g": "1480b7b889901adc",
+        "name": "to Send Message",
+        "mode": "link",
+        "links": [
+            "c46d860f9d15df6f"
+        ],
+        "x": 930,
+        "y": 460,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "af1f4bfb62afed20",
+        "type": "rbe",
+        "z": "98817579b4d43a21",
+        "g": "1480b7b889901adc",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "eventId",
+        "x": 710,
+        "y": 340,
+        "wires": [
+            [
+                "cea122cb533817f9"
+            ]
+        ]
+    },
+    {
+        "id": "cea122cb533817f9",
+        "type": "link out",
+        "z": "98817579b4d43a21",
+        "g": "1480b7b889901adc",
+        "name": "to Send Emote",
+        "mode": "link",
+        "links": [
+            "18401eb264422f98"
+        ],
+        "x": 880,
+        "y": 340,
+        "wires": [],
+        "l": true
     },
     {
         "id": "1d5e1165b1c48d8e",
@@ -2698,8 +2478,8 @@
         "z": "431f278d3dd31e78",
         "g": "ee84ac078f839ee6",
         "name": "Meow Sugar",
-        "func": "// const action = [/\\bsugar\\b/i, /\\bdiabetes\\b/i] \nconst action = context.get(\"action\") //ACTION WORDS SET IN ON START\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0])) {\n        let payload = \"Meow! Sugar!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"html\"\n        return [msg, null];\n    }\n}\nif (command[0] == \"help\") {\n    let words = action.toString()\n    words = words.replace(/(?<=\\\\)\\w?/g, \"\")\n    words = words.replace(/\\\\/g, \"\")\n    let arr = words.match(/\\w+(?=\\/)/g)\n    let helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - CatBot reports Mark's sugar </li>\"\n    if (msg.helpList) {\n        msg.helpList += helpText\n    } else {\n        msg.helpList = helpText\n    }\n    node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n    return [null, msg];\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\n    node.done();\n}",
-        "outputs": 2,
+        "func": "const action = context.get(\"action\") //ACTION WORDS SET IN ON START\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0])) {\n        let payload = \"Meow! Sugar!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"html\"\n        return [msg, null];\n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\nnode.done();\n",
+        "outputs": 1,
         "noerr": 0,
         "initialize": "// Code added here will be run once\n// whenever the node is started.\nconst action = [/\\bsugar\\b/i, /\\bdiabetes\\b/i]\ncontext.set(\"action\", action)\nlet words = action.toString()\nwords = words.replace(/(?<=\\\\)\\w?/g, \"\")\nwords = words.replace(/\\\\/g, \"\")\nlet arr = words.match(/\\w+(?=\\/)/g)\nlet helpEnd = \"</em></b> - CatBot reports Mark's sugar </li>\"\nlet helpText = \"<li><b><em>\" + arr.toString() + helpEnd\n// if (global.get(\"help\", \"file\")) {\n//     let helpList = global.get(\"help\", \"file\") + helpText\n//     global.set(\"help\", helpList, \"file\")\n// } else {\n//     global.set(\"help\", helpText, \"file\")\n// }\nglobal.set(\"help.sugar\", helpText, \"file\")",
         "finalize": "",
@@ -2709,26 +2489,8 @@
         "wires": [
             [
                 "f29590b5392c254c"
-            ],
-            [
-                "7702aadf79d9809c"
             ]
         ]
-    },
-    {
-        "id": "7702aadf79d9809c",
-        "type": "link out",
-        "z": "431f278d3dd31e78",
-        "g": "ee84ac078f839ee6",
-        "name": "to Send Message",
-        "mode": "link",
-        "links": [
-            "c46d860f9d15df6f"
-        ],
-        "x": 690,
-        "y": 120,
-        "wires": [],
-        "l": true
     },
     {
         "id": "cc36f0ddead6ce1f",
@@ -2832,7 +2594,7 @@
         "d": true,
         "g": "9692f2292e36e779",
         "name": "incl ascii chart",
-        "func": "const rawData = msg.payload\nlet mmollArr = []\nfor (let i = 0; i < rawData.length; i++) {\n    let mmoll = rawData[i].sgv / 18\n    mmollArr.unshift(mmoll)\n    rawData[i].mmoll = mmoll\n}\nmmollArr.sort(function (a, b) { return a.date - b.date });\nlet chartConfig = {\n    \"height\": 20\n}\nlet chart = asciichart.plot(mmollArr)\nmsg.payload = chart\nlet replace = /\\\\n/g\nmsg.formatted_payload =  chart.replace(replace,\"<br>\") \nmsg.mmoll = mmollArr\nmsg.rawdata = rawData\nreturn msg;\n// var config = {\n//     colors: [\n//         asciichart.blue,\n//         asciichart.green,\n//         asciichart.default, // default color\n//         undefined, // equivalent to default\n//     ]\n// }",
+        "func": "const rawData = msg.payload\nlet mmollArr = []\nfor (let i = 0; i < rawData.length; i++) {\n    let mmoll = rawData[i].sgv / 18\n    mmollArr.unshift(mmoll)\n    rawData[i].mmoll = mmoll\n}\nmmollArr.sort(function (a, b) { return a.date - b.date });\nlet chartConfig = {\n    \"height\": 20\n}\nlet chart = asciichart.plot(mmollArr)\nmsg.payload = chart\nlet replace = /\\\\n/g\nmsg.formatted_payload =  chart.replace(\"\\n\",\"<br>\") \nmsg.mmoll = mmollArr\nmsg.rawdata = rawData\nreturn msg;\n// var config = {\n//     colors: [\n//         asciichart.blue,\n//         asciichart.green,\n//         asciichart.default, // default color\n//         undefined, // equivalent to default\n//     ]\n// }",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2847,7 +2609,8 @@
         "y": 360,
         "wires": [
             [
-                "332afe8cc3f9f84a"
+                "332afe8cc3f9f84a",
+                "df0d394676e849a4"
             ]
         ]
     },
@@ -3005,8 +2768,8 @@
         "links": [
             "6f1fbab3ef578ea5"
         ],
-        "x": 615,
-        "y": 60,
+        "x": 595,
+        "y": 80,
         "wires": []
     },
     {
@@ -3027,60 +2790,11 @@
         ]
     },
     {
-        "id": "2401a823f24a269e",
-        "type": "link out",
-        "z": "431f278d3dd31e78",
-        "g": "d1677d80792879be",
-        "name": "link out 27",
-        "mode": "link",
-        "links": [
-            "a7a0f52c5408e527"
-        ],
-        "x": 765,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "a7a0f52c5408e527",
-        "type": "link in",
-        "z": "431f278d3dd31e78",
-        "g": "ee84ac078f839ee6",
-        "name": "link in 12",
-        "links": [
-            "2401a823f24a269e"
-        ],
-        "x": 515,
-        "y": 120,
-        "wires": [
-            [
-                "7702aadf79d9809c"
-            ]
-        ]
-    },
-    {
-        "id": "3fa5d4452fade10a",
-        "type": "debug",
-        "z": "431f278d3dd31e78",
-        "name": "debug 17",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 870,
-        "y": 60,
-        "wires": []
-    },
-    {
         "id": "411e6fed817f6b02",
         "type": "function",
         "z": "431f278d3dd31e78",
-        "d": true,
         "name": "build URL",
-        "func": "// let count = msg.payload.hours * 12\nlet count = 1\nlet base_url = global.get(\"nightscout.base_url\",\"file\")\nlet url_part1 = \"/api/v1/entries/sgv\" \nlet query = \"?count=\" + count\nmsg.url = base_url + url_part1 + query\nmsg.apisecret = global.get(\"nightscout.apisecret\",\"file\")\nreturn msg;",
+        "func": "// let count = msg.payload.hours * 12\nlet count = 48\nlet base_url = global.get(\"nightscout.base_url\",\"file\")\nlet url_part1 = \"/api/v1/entries/sgv\" \nlet query = \"?count=\" + count\nmsg.url = base_url + url_part1 + query\nmsg.apisecret = global.get(\"nightscout.apisecret\",\"file\")\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3098,7 +2812,6 @@
         "id": "236dccc523545536",
         "type": "http request",
         "z": "431f278d3dd31e78",
-        "d": true,
         "name": "Nightscout",
         "method": "GET",
         "ret": "obj",
@@ -3133,31 +2846,89 @@
         ]
     },
     {
-        "id": "ae4c4fddb05855d5",
-        "type": "debug",
-        "z": "a1097c4732912423",
-        "name": "debug 11",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 580,
-        "y": 180,
+        "id": "a7a0f52c5408e527",
+        "type": "link in",
+        "z": "431f278d3dd31e78",
+        "g": "ee84ac078f839ee6",
+        "name": "link in 12",
+        "links": [
+            "2401a823f24a269e",
+            "df0d394676e849a4"
+        ],
+        "x": 345,
+        "y": 120,
+        "wires": [
+            [
+                "7702aadf79d9809c"
+            ]
+        ]
+    },
+    {
+        "id": "2401a823f24a269e",
+        "type": "link out",
+        "z": "431f278d3dd31e78",
+        "g": "d1677d80792879be",
+        "name": "link out 27",
+        "mode": "link",
+        "links": [
+            "a7a0f52c5408e527"
+        ],
+        "x": 765,
+        "y": 220,
         "wires": []
     },
     {
-        "id": "819a771f1a41e7c3",
+        "id": "7702aadf79d9809c",
+        "type": "link out",
+        "z": "431f278d3dd31e78",
+        "g": "ee84ac078f839ee6",
+        "name": "to Send Message",
+        "mode": "link",
+        "links": [
+            "c46d860f9d15df6f"
+        ],
+        "x": 490,
+        "y": 120,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "df0d394676e849a4",
+        "type": "link out",
+        "z": "431f278d3dd31e78",
+        "d": true,
+        "g": "9692f2292e36e779",
+        "name": "link out 28",
+        "mode": "link",
+        "links": [
+            "a7a0f52c5408e527"
+        ],
+        "x": 805,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "12db1c3b997c251e",
+        "type": "link out",
+        "z": "a1097c4732912423",
+        "name": "link out 29",
+        "mode": "link",
+        "links": [
+            "c46d860f9d15df6f"
+        ],
+        "x": 555,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "1b6bfe74fd3aa7cf",
         "type": "http request",
         "z": "a1097c4732912423",
-        "name": "",
+        "name": "JSON",
         "method": "GET",
         "ret": "obj",
         "paytoqs": "ignore",
-        "url": "wttr.in/Wellington?format=j1",
+        "url": "wttr.in/Wellington?format=v2",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -3172,16 +2943,17 @@
                 "valueValue": ""
             }
         ],
-        "x": 350,
-        "y": 200,
+        "x": 170,
+        "y": 60,
         "wires": [
             [
-                "ae4c4fddb05855d5"
+                "c3c273219ecb70d8"
             ]
-        ]
+        ],
+        "info": "wttr.in/Wellington?format=j1 #JSON\nwttr.in/Wellington?format=v2 #more info"
     },
     {
-        "id": "7f920f3ec3863386",
+        "id": "75663261eb945636",
         "type": "inject",
         "z": "a1097c4732912423",
         "name": "",
@@ -3201,76 +2973,36 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 190,
-        "y": 180,
+        "x": 120,
+        "y": 280,
         "wires": [
             [
-                "819a771f1a41e7c3"
+                "5683dd30f06e6c76"
             ]
         ]
     },
     {
-        "id": "7c59906dc04b557f",
-        "type": "http request",
+        "id": "c3c273219ecb70d8",
+        "type": "function",
         "z": "a1097c4732912423",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "v2.wttr.in/Wellington?format=v2",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [
-            {
-                "keyType": "other",
-                "keyValue": "",
-                "valueType": "other",
-                "valueValue": ""
-            }
-        ],
-        "x": 350,
-        "y": 320,
+        "name": "function 10",
+        "func": "let weather = msg.payload\nmsg.formatted_payload = weather.split(\"\\n\\n</pre>\", 1) + \"</pre>\"\nmsg.payload = \"Weather\"\nmsg.format = \"html\"\nmsg.topic = global.get(\"matrix.rooms.catbot\",\"file\")\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 120,
         "wires": [
             [
-                "ac7687872df2baad"
+                "12db1c3b997c251e",
+                "d19fe9b5d3075e68"
             ]
         ]
     },
     {
-        "id": "76e256c62dd1b04e",
-        "type": "inject",
-        "z": "a1097c4732912423",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 190,
-        "y": 300,
-        "wires": [
-            [
-                "7c59906dc04b557f"
-            ]
-        ]
-    },
-    {
-        "id": "ac7687872df2baad",
+        "id": "d19fe9b5d3075e68",
         "type": "debug",
         "z": "a1097c4732912423",
         "name": "debug 16",
@@ -3282,8 +3014,151 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 780,
-        "y": 300,
+        "x": 540,
+        "y": 120,
         "wires": []
+    },
+    {
+        "id": "5683dd30f06e6c76",
+        "type": "http request",
+        "z": "a1097c4732912423",
+        "name": "Good single line forcast",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "wttr.in/Wellington?format=\"%l:+%c+%C\\nTemp:+%t+(%f), Rain:+%p, Wind:+%w\\nSun:+%D+%z+%d\\n\"",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": ""
+            }
+        ],
+        "x": 310,
+        "y": 280,
+        "wires": [
+            [
+                "eea4cab5988a5e63"
+            ]
+        ],
+        "info": "wttr.in/Wellington?format=j1 #JSON\nwttr.in/Wellington?format=v2 #more info"
+    },
+    {
+        "id": "ae9f1fe974fae143",
+        "type": "inject",
+        "z": "a1097c4732912423",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 620,
+        "wires": [
+            [
+                "8ad38ec6f995a1e0"
+            ]
+        ]
+    },
+    {
+        "id": "7dd288c0d60aab29",
+        "type": "function",
+        "z": "a1097c4732912423",
+        "name": "function 11",
+        "func": "let weather = msg.payload\nmsg.formatted_payload = weather.split(\"\\n\\n</pre>\", 1) + \"</pre>\"\nmsg.payload = \"Weather\"\nmsg.format = \"html\"\nmsg.topic = global.get(\"matrix.rooms.catbot\",\"file\")\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 440,
+        "wires": [
+            [
+                "cfb86be45d1fb3cf",
+                "eea4cab5988a5e63"
+            ]
+        ]
+    },
+    {
+        "id": "cfb86be45d1fb3cf",
+        "type": "link out",
+        "z": "a1097c4732912423",
+        "name": "link out 30",
+        "mode": "link",
+        "links": [
+            "c46d860f9d15df6f"
+        ],
+        "x": 755,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "eea4cab5988a5e63",
+        "type": "debug",
+        "z": "a1097c4732912423",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "8ad38ec6f995a1e0",
+        "type": "http request",
+        "z": "a1097c4732912423",
+        "name": "JSON",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "wttr.in/Wellington?format=4",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": ""
+            }
+        ],
+        "x": 250,
+        "y": 560,
+        "wires": [
+            [
+                "eea4cab5988a5e63"
+            ]
+        ],
+        "info": "wttr.in/Wellington?format=j1 #JSON\nwttr.in/Wellington?format=v2 #more info"
     }
 ]
