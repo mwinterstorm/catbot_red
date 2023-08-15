@@ -15,7 +15,11 @@ Built on Node Red
     1. camera / person detection alerting - currently hardcoded to my cameras
     1. integrates with Assist in Home Assistant 
     1. location (WIP)
-1. Emote reactions to certain phrases (WIP)
-1. Message replies (WIP)
+1. Emote reactions to certain phrases 
+    1. working but reactions hardcoded 
+1. Message replies 
+    1. working but reactions hardcoded 
 1. updates its profile pic from cat pictures 
+    1. working - pulls from a configurable matrix room
 1. cat facts from cat fact api
+    1. Working - need better plan for getting verified facts
