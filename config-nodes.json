@@ -1,0 +1,32 @@
+[
+  {
+    "id": "57146ada2355e7df",
+    "type": "matrix-server-config",
+    "name": "CatBot",
+    "autoAcceptRoomInvites": true,
+    "enableE2ee": true,
+    "global": true
+  },
+  {
+    "id": "1f843fd7.cd512",
+    "type": "server",
+    "name": "Home Assistant",
+    "addon": false,
+    "rejectUnauthorizedCerts": true,
+    "ha_boolean": "",
+    "connectionDelay": false,
+    "cacheJson": false,
+    "heartbeat": true,
+    "heartbeatInterval": "30",
+    "areaSelector": "friendlyName",
+    "deviceSelector": "friendlyName",
+    "entitySelector": "friendlyName",
+    "statusSeparator": "",
+    "statusYear": "numeric",
+    "statusMonth": "long",
+    "statusDay": "2-digit",
+    "statusHourCycle": "h23",
+    "statusTimeFormat": "h:m",
+    "enableGlobalContextStore": true
+  }
+]

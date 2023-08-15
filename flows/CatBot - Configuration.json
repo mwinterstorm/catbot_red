@@ -1,0 +1,153 @@
+[
+  {
+    "id": "af4923605b6d1997",
+    "type": "tab",
+    "label": "CatBot - Configuration",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "2650e46b75c555ea",
+    "type": "group",
+    "z": "af4923605b6d1997",
+    "name": "Configuration",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "f462d72ecdf7ddca",
+      "4e0132b221748329",
+      "87666acc7001bbf4",
+      "cfb9292e374e6d97",
+      "66bfd08bfa9cb39c"
+    ],
+    "x": 34,
+    "y": 19,
+    "w": 452,
+    "h": 202
+  },
+  {
+    "id": "cfb9292e374e6d97",
+    "type": "junction",
+    "z": "af4923605b6d1997",
+    "g": "2650e46b75c555ea",
+    "x": 240,
+    "y": 60,
+    "wires": [
+      [
+        "f462d72ecdf7ddca",
+        "87666acc7001bbf4",
+        "66bfd08bfa9cb39c"
+      ]
+    ]
+  },
+  {
+    "id": "f462d72ecdf7ddca",
+    "type": "credentials",
+    "z": "af4923605b6d1997",
+    "g": "2650e46b75c555ea",
+    "name": "Nightscout",
+    "props": [
+      {
+        "value": "#:(file)::nightscout.base_url",
+        "type": "global"
+      },
+      {
+        "value": "#:(file)::nightscout.apisecret",
+        "type": "global"
+      }
+    ],
+    "x": 370,
+    "y": 60,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "4e0132b221748329",
+    "type": "inject",
+    "z": "af4923605b6d1997",
+    "g": "2650e46b75c555ea",
+    "name": "Initialise",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "3600",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 0.1,
+    "topic": "intialise",
+    "payload": "",
+    "payloadType": "date",
+    "x": 140,
+    "y": 60,
+    "wires": [
+      [
+        "cfb9292e374e6d97"
+      ]
+    ]
+  },
+  {
+    "id": "87666acc7001bbf4",
+    "type": "credentials",
+    "z": "af4923605b6d1997",
+    "g": "2650e46b75c555ea",
+    "name": "Home Assistant",
+    "props": [
+      {
+        "value": "#:(file)::hassio.base_url",
+        "type": "global"
+      }
+    ],
+    "x": 380,
+    "y": 120,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "66bfd08bfa9cb39c",
+    "type": "credentials",
+    "z": "af4923605b6d1997",
+    "g": "2650e46b75c555ea",
+    "name": "Matrix",
+    "props": [
+      {
+        "value": "#:(file)::matrix.base_url",
+        "type": "global"
+      },
+      {
+        "value": "#:(file)::matrix.domain",
+        "type": "global"
+      },
+      {
+        "value": "#:(file)::matrix.rooms.catbotprofilepics",
+        "type": "global"
+      },
+      {
+        "value": "#:(file)::matrix.rooms.catbot",
+        "type": "global"
+      },
+      {
+        "value": "#:(file)::matrix.rooms.catfacts",
+        "type": "global"
+      },
+      {
+        "value": "#:(file)::matrix.rooms.camerafeed",
+        "type": "global"
+      }
+    ],
+    "x": 350,
+    "y": 180,
+    "wires": [
+      []
+    ]
+  }
+]

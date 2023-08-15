@@ -1,0 +1,508 @@
+[
+  {
+    "id": "431f278d3dd31e78",
+    "type": "tab",
+    "label": "Nightscout",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "ee84ac078f839ee6",
+    "type": "group",
+    "z": "431f278d3dd31e78",
+    "name": "CatBot Report Sugar",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "2521438a5cfd8a18",
+      "67dba891485db94d",
+      "f29590b5392c254c",
+      "a7a0f52c5408e527",
+      "7702aadf79d9809c"
+    ],
+    "x": 94,
+    "y": 39,
+    "w": 542,
+    "h": 122
+  },
+  {
+    "id": "9692f2292e36e779",
+    "type": "group",
+    "z": "431f278d3dd31e78",
+    "name": "WIP",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "cc36f0ddead6ce1f",
+      "dc1e6033779edab3",
+      "20dde37c7b1b935d",
+      "332afe8cc3f9f84a",
+      "ddff58edaa860225",
+      "a65fa937977bea53",
+      "df0d394676e849a4"
+    ],
+    "x": 34,
+    "y": 319,
+    "w": 872,
+    "h": 202
+  },
+  {
+    "id": "d1677d80792879be",
+    "type": "group",
+    "z": "431f278d3dd31e78",
+    "name": "Send latest sugar",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "24a7e6ab83cc1708",
+      "c18be0ec6eeca8c3",
+      "75e7d1e0947a9569",
+      "054f16705c3e7976",
+      "6f1fbab3ef578ea5",
+      "2401a823f24a269e"
+    ],
+    "x": 14,
+    "y": 179,
+    "w": 792,
+    "h": 82
+  },
+  {
+    "id": "2521438a5cfd8a18",
+    "type": "function",
+    "z": "431f278d3dd31e78",
+    "g": "ee84ac078f839ee6",
+    "name": "Meow Sugar",
+    "func": "const action = context.get(\"action\") //ACTION WORDS SET IN ON START\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0])) {\n        let payload = \"Meow! Sugar!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"html\"\n        return [msg, null];\n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\nnode.done();\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "// Code added here will be run once\n// whenever the node is started.\nconst action = [/\\bsugar\\b/i, /\\bdiabetes\\b/i]\ncontext.set(\"action\", action)\nlet words = action.toString()\nwords = words.replace(/(?<=\\\\)\\w?/g, \"\")\nwords = words.replace(/\\\\/g, \"\")\nlet arr = words.match(/\\w+(?=\\/)/g)\nlet helpEnd = \"</em></b> - CatBot reports Mark's sugar </li>\"\nlet helpText = \"<li><b><em>\" + arr.toString() + helpEnd\n// if (global.get(\"help\", \"file\")) {\n//     let helpList = global.get(\"help\", \"file\") + helpText\n//     global.set(\"help\", helpList, \"file\")\n// } else {\n//     global.set(\"help\", helpText, \"file\")\n// }\nglobal.set(\"help.sugar\", helpText, \"file\")",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 80,
+    "wires": [
+      [
+        "f29590b5392c254c"
+      ]
+    ]
+  },
+  {
+    "id": "cc36f0ddead6ce1f",
+    "type": "debug",
+    "z": "431f278d3dd31e78",
+    "d": true,
+    "g": "9692f2292e36e779",
+    "name": "debug 1",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 660,
+    "y": 480,
+    "wires": []
+  },
+  {
+    "id": "dc1e6033779edab3",
+    "type": "function",
+    "z": "431f278d3dd31e78",
+    "d": true,
+    "g": "9692f2292e36e779",
+    "name": "Ascii Chart",
+    "func": "var s0 = new Array(120)\nfor (var i = 0; i < s0.length; i++)\n    s0[i] = 15 * Math.sin(i * ((Math.PI * 4) / s0.length))\nconsole.log(asciichart.plot(s0))\nmsg.payload = asciichart.plot(s0)\nmsg.array = s0\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [
+      {
+        "var": "asciichart",
+        "module": "asciichart"
+      }
+    ],
+    "x": 450,
+    "y": 480,
+    "wires": [
+      [
+        "cc36f0ddead6ce1f"
+      ]
+    ]
+  },
+  {
+    "id": "20dde37c7b1b935d",
+    "type": "inject",
+    "z": "431f278d3dd31e78",
+    "d": true,
+    "g": "9692f2292e36e779",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 280,
+    "y": 480,
+    "wires": [
+      [
+        "dc1e6033779edab3"
+      ]
+    ]
+  },
+  {
+    "id": "332afe8cc3f9f84a",
+    "type": "debug",
+    "z": "431f278d3dd31e78",
+    "d": true,
+    "g": "9692f2292e36e779",
+    "name": "debug 15",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 800,
+    "y": 420,
+    "wires": []
+  },
+  {
+    "id": "ddff58edaa860225",
+    "type": "function",
+    "z": "431f278d3dd31e78",
+    "d": true,
+    "g": "9692f2292e36e779",
+    "name": "incl ascii chart",
+    "func": "const rawData = msg.payload\nlet mmollArr = []\nfor (let i = 0; i < rawData.length; i++) {\n    let mmoll = rawData[i].sgv / 18\n    mmollArr.unshift(mmoll)\n    rawData[i].mmoll = mmoll\n}\nmmollArr.sort(function (a, b) { return a.date - b.date });\nlet chartConfig = {\n    \"height\": 20\n}\nlet chart = asciichart.plot(mmollArr)\nmsg.payload = chart\nlet replace = /\\\\n/g\nmsg.formatted_payload =  chart.replace(\"\\n\",\"<br>\") \nmsg.mmoll = mmollArr\nmsg.rawdata = rawData\nreturn msg;\n// var config = {\n//     colors: [\n//         asciichart.blue,\n//         asciichart.green,\n//         asciichart.default, // default color\n//         undefined, // equivalent to default\n//     ]\n// }",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [
+      {
+        "var": "asciichart",
+        "module": "asciichart"
+      }
+    ],
+    "x": 620,
+    "y": 360,
+    "wires": [
+      [
+        "332afe8cc3f9f84a",
+        "df0d394676e849a4"
+      ]
+    ]
+  },
+  {
+    "id": "a65fa937977bea53",
+    "type": "inject",
+    "z": "431f278d3dd31e78",
+    "d": true,
+    "g": "9692f2292e36e779",
+    "name": "",
+    "props": [
+      {
+        "p": "payload.hours",
+        "v": "4",
+        "vt": "num"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "x": 130,
+    "y": 420,
+    "wires": [
+      [
+        "411e6fed817f6b02"
+      ]
+    ]
+  },
+  {
+    "id": "67dba891485db94d",
+    "type": "link in",
+    "z": "431f278d3dd31e78",
+    "g": "ee84ac078f839ee6",
+    "name": "Receive Message to process",
+    "links": [
+      "6a469a172b61ff41"
+    ],
+    "x": 240,
+    "y": 80,
+    "wires": [
+      [
+        "2521438a5cfd8a18"
+      ]
+    ],
+    "l": true
+  },
+  {
+    "id": "c18be0ec6eeca8c3",
+    "type": "http request",
+    "z": "431f278d3dd31e78",
+    "g": "d1677d80792879be",
+    "name": "Nightscout",
+    "method": "GET",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [
+      {
+        "keyType": "other",
+        "keyValue": "api-secret",
+        "valueType": "msg",
+        "valueValue": "apisecret"
+      },
+      {
+        "keyType": "other",
+        "keyValue": "accept",
+        "valueType": "other",
+        "valueValue": "application/json"
+      }
+    ],
+    "x": 470,
+    "y": 220,
+    "wires": [
+      [
+        "24a7e6ab83cc1708"
+      ]
+    ]
+  },
+  {
+    "id": "75e7d1e0947a9569",
+    "type": "function",
+    "z": "431f278d3dd31e78",
+    "g": "d1677d80792879be",
+    "name": "build URL",
+    "func": "// let count = msg.payload.hours * 12\nlet count = 1\nlet base_url = global.get(\"nightscout.base_url\",\"file\")\nlet url_part1 = \"/api/v1/entries/sgv\" \nlet query = \"?count=\" + count\nmsg.url = base_url + url_part1 + query\nmsg.apisecret = global.get(\"nightscout.apisecret\",\"file\")\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 300,
+    "y": 220,
+    "wires": [
+      [
+        "c18be0ec6eeca8c3"
+      ]
+    ]
+  },
+  {
+    "id": "24a7e6ab83cc1708",
+    "type": "function",
+    "z": "431f278d3dd31e78",
+    "g": "d1677d80792879be",
+    "name": "Sugar msg",
+    "func": "const sugar = Math.round(( msg.payload[0].sgv / 18 ) *100) / 100 + \" mmoll\"\nconst delta = Math.round((msg.payload[0].delta / 18) * 100) / 100\nconst direction = msg.payload[0].direction\nconst now = Date.now() / 1000\nconst timeofreading = msg.payload[0].date / 1000\nconst timeSince = now - timeofreading \nlet time\nif (timeSince < 60) {\n    time = Math.floor(timeSince) + \"s\"\n} else if (timeSince >= 60) {\n    let mins = Math.floor(timeSince / 60)\n    let secs = Math.floor(timeSince - (mins * 60))\n    time = mins + \"m \" + secs + \"s\"\n} else if (timeSince >= 3600) {\n    let hours = Math.floor(timeSince / (60 * 60))\n    let mins = Math.floor((timeSince / 60) - (hours * 60))\n    let secs = Math.floor(timeSince - ((hours * 60 * 60) + (mins * 60)))\n\n    time = hours + \"h \" + mins + \"m \" + secs + \"s\"\n}\nlet payload = \"<p>Meow!<br><br>Mark's Sugar is <b>\" + sugar + \"</b><br><br>It is <em>\" + direction + \"</em> (\" + delta + \")<br>Reading is \" + time + \" old\"\nlet rawpayload = \"Meow! Mark's Sugar is \" + sugar + \". It is \" + direction + \". Reading is \" + time + \" old\"\nnode.status({ fill: \"green\", shape: \"dot\", text: \"Meow! \" + sugar });\nmsg.payload = rawpayload\nmsg.formatted_payload = payload\nmsg.format = \"html\"\nmsg.debug = {\n    \"time of reading\": timeofreading,\n    \"timesince\": timeSince\n}\nreturn msg\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 650,
+    "y": 220,
+    "wires": [
+      [
+        "2401a823f24a269e"
+      ]
+    ]
+  },
+  {
+    "id": "054f16705c3e7976",
+    "type": "rbe",
+    "z": "431f278d3dd31e78",
+    "g": "d1677d80792879be",
+    "name": "",
+    "func": "rbe",
+    "gap": "",
+    "start": "",
+    "inout": "out",
+    "septopics": true,
+    "property": "payload",
+    "topi": "eventId",
+    "x": 150,
+    "y": 220,
+    "wires": [
+      [
+        "75e7d1e0947a9569"
+      ]
+    ]
+  },
+  {
+    "id": "f29590b5392c254c",
+    "type": "link out",
+    "z": "431f278d3dd31e78",
+    "g": "ee84ac078f839ee6",
+    "name": "link out 26",
+    "mode": "link",
+    "links": [
+      "6f1fbab3ef578ea5"
+    ],
+    "x": 595,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "6f1fbab3ef578ea5",
+    "type": "link in",
+    "z": "431f278d3dd31e78",
+    "g": "d1677d80792879be",
+    "name": "link in 11",
+    "links": [
+      "f29590b5392c254c"
+    ],
+    "x": 55,
+    "y": 220,
+    "wires": [
+      [
+        "054f16705c3e7976"
+      ]
+    ]
+  },
+  {
+    "id": "411e6fed817f6b02",
+    "type": "function",
+    "z": "431f278d3dd31e78",
+    "name": "build URL",
+    "func": "// let count = msg.payload.hours * 12\nlet count = 48\nlet base_url = global.get(\"nightscout.base_url\",\"file\")\nlet url_part1 = \"/api/v1/entries/sgv\" \nlet query = \"?count=\" + count\nmsg.url = base_url + url_part1 + query\nmsg.apisecret = global.get(\"nightscout.apisecret\",\"file\")\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 300,
+    "y": 420,
+    "wires": [
+      [
+        "236dccc523545536"
+      ]
+    ]
+  },
+  {
+    "id": "236dccc523545536",
+    "type": "http request",
+    "z": "431f278d3dd31e78",
+    "name": "Nightscout",
+    "method": "GET",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [
+      {
+        "keyType": "other",
+        "keyValue": "api-secret",
+        "valueType": "msg",
+        "valueValue": "apisecret"
+      },
+      {
+        "keyType": "other",
+        "keyValue": "accept",
+        "valueType": "other",
+        "valueValue": "application/json"
+      }
+    ],
+    "x": 470,
+    "y": 420,
+    "wires": [
+      [
+        "ddff58edaa860225"
+      ]
+    ]
+  },
+  {
+    "id": "a7a0f52c5408e527",
+    "type": "link in",
+    "z": "431f278d3dd31e78",
+    "g": "ee84ac078f839ee6",
+    "name": "link in 12",
+    "links": [
+      "2401a823f24a269e",
+      "df0d394676e849a4"
+    ],
+    "x": 345,
+    "y": 120,
+    "wires": [
+      [
+        "7702aadf79d9809c"
+      ]
+    ]
+  },
+  {
+    "id": "2401a823f24a269e",
+    "type": "link out",
+    "z": "431f278d3dd31e78",
+    "g": "d1677d80792879be",
+    "name": "link out 27",
+    "mode": "link",
+    "links": [
+      "a7a0f52c5408e527"
+    ],
+    "x": 765,
+    "y": 220,
+    "wires": []
+  },
+  {
+    "id": "7702aadf79d9809c",
+    "type": "link out",
+    "z": "431f278d3dd31e78",
+    "g": "ee84ac078f839ee6",
+    "name": "to Send Message",
+    "mode": "link",
+    "links": [
+      "c46d860f9d15df6f"
+    ],
+    "x": 490,
+    "y": 120,
+    "wires": [],
+    "l": true
+  },
+  {
+    "id": "df0d394676e849a4",
+    "type": "link out",
+    "z": "431f278d3dd31e78",
+    "d": true,
+    "g": "9692f2292e36e779",
+    "name": "link out 28",
+    "mode": "link",
+    "links": [
+      "a7a0f52c5408e527"
+    ],
+    "x": 805,
+    "y": 360,
+    "wires": []
+  }
+]

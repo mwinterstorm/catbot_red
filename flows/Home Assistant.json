@@ -1,0 +1,642 @@
+[
+  {
+    "id": "aaf4b93dc3a4600c",
+    "type": "tab",
+    "label": "Home Assistant",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "d2e1ce6ecc6da2fa",
+    "type": "group",
+    "z": "aaf4b93dc3a4600c",
+    "name": "Unifi Protect Doorbell notification on person detection",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "1d5e1165b1c48d8e",
+      "0a01a955aed4feaa",
+      "803df6cf3867aa00",
+      "dac7b3524ede3856",
+      "9b30c4ddaf120e0a",
+      "a02ed4ab1bf97ee1",
+      "c13741f557fc259f",
+      "570391b58083db46",
+      "7da1fe01ca382449",
+      "4a4f55c958968ec6",
+      "df6d0c657207457c"
+    ],
+    "x": 14,
+    "y": 119,
+    "w": 912,
+    "h": 242
+  },
+  {
+    "id": "98527aa7d133e812",
+    "type": "group",
+    "z": "aaf4b93dc3a4600c",
+    "name": "location",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "e6f888e965bb09cb",
+      "2db9020ab55d76dd",
+      "4960960864e5518b",
+      "775b3155fb3d081e",
+      "60b5d567049ec6b2"
+    ],
+    "x": 54,
+    "y": 399,
+    "w": 792,
+    "h": 282
+  },
+  {
+    "id": "56eb129cfe90f429",
+    "type": "group",
+    "z": "aaf4b93dc3a4600c",
+    "name": "Process Home commands",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "3142187b733d14ae",
+      "82bb53a539a75ca9"
+    ],
+    "x": 114,
+    "y": 19,
+    "w": 622,
+    "h": 82
+  },
+  {
+    "id": "1d5e1165b1c48d8e",
+    "type": "change",
+    "z": "aaf4b93dc3a4600c",
+    "g": "d2e1ce6ecc6da2fa",
+    "name": "Set constants",
+    "rules": [
+      {
+        "t": "set",
+        "p": "nvr_id",
+        "pt": "msg",
+        "to": "8195e7e67d38689cf64fefeff19c8d7f",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "#:(file)::matrix.rooms.camerafeed",
+        "tot": "global"
+      },
+      {
+        "t": "set",
+        "p": "type",
+        "pt": "msg",
+        "to": "m.notice",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 580,
+    "y": 160,
+    "wires": [
+      [
+        "0a01a955aed4feaa"
+      ]
+    ]
+  },
+  {
+    "id": "0a01a955aed4feaa",
+    "type": "moment",
+    "z": "aaf4b93dc3a4600c",
+    "g": "d2e1ce6ecc6da2fa",
+    "name": "filename",
+    "topic": "",
+    "input": "",
+    "inputType": "date",
+    "inTz": "Pacific/Auckland",
+    "adjAmount": 0,
+    "adjType": "days",
+    "adjDir": "add",
+    "format": "YYYYMMDD-HHmmss",
+    "locale": "C",
+    "output": "filename",
+    "outputType": "msg",
+    "outTz": "Pacific/Auckland",
+    "x": 760,
+    "y": 160,
+    "wires": [
+      [
+        "df6d0c657207457c"
+      ]
+    ]
+  },
+  {
+    "id": "803df6cf3867aa00",
+    "type": "moment",
+    "z": "aaf4b93dc3a4600c",
+    "g": "d2e1ce6ecc6da2fa",
+    "name": "Get time for body",
+    "topic": "",
+    "input": "",
+    "inputType": "date",
+    "inTz": "Pacific/Auckland",
+    "adjAmount": 0,
+    "adjType": "days",
+    "adjDir": "add",
+    "format": "ddd, D MMM YYYY - HH:mm:ss",
+    "locale": "C",
+    "output": "timebody",
+    "outputType": "msg",
+    "outTz": "Pacific/Auckland",
+    "x": 730,
+    "y": 220,
+    "wires": [
+      [
+        "a02ed4ab1bf97ee1"
+      ]
+    ]
+  },
+  {
+    "id": "dac7b3524ede3856",
+    "type": "http request",
+    "z": "aaf4b93dc3a4600c",
+    "g": "d2e1ce6ecc6da2fa",
+    "name": "Get images",
+    "method": "GET",
+    "ret": "bin",
+    "paytoqs": "ignore",
+    "url": "",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "bearer",
+    "senderr": false,
+    "headers": [],
+    "x": 410,
+    "y": 280,
+    "wires": [
+      [
+        "7da1fe01ca382449",
+        "9b30c4ddaf120e0a"
+      ]
+    ]
+  },
+  {
+    "id": "9b30c4ddaf120e0a",
+    "type": "change",
+    "z": "aaf4b93dc3a4600c",
+    "g": "d2e1ce6ecc6da2fa",
+    "name": "",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "body",
+        "tot": "msg"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 600,
+    "y": 320,
+    "wires": [
+      [
+        "4a4f55c958968ec6"
+      ]
+    ]
+  },
+  {
+    "id": "a02ed4ab1bf97ee1",
+    "type": "function",
+    "z": "aaf4b93dc3a4600c",
+    "g": "d2e1ce6ecc6da2fa",
+    "name": "Set message based on event type",
+    "func": "let eventType = msg.event_type\n\nif (eventType == \"person_detected\") {\n    msg.body = \"Person Detected at \" + msg.timebody\n} else if (eventType == \"doorbell_pressed\") {\n    msg.body = \"Doorbell rung at \" + msg.timebody\n}\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 180,
+    "y": 280,
+    "wires": [
+      [
+        "dac7b3524ede3856"
+      ]
+    ]
+  },
+  {
+    "id": "e6f888e965bb09cb",
+    "type": "api-current-state",
+    "z": "aaf4b93dc3a4600c",
+    "d": true,
+    "g": "98527aa7d133e812",
+    "name": "",
+    "server": "1f843fd7.cd512",
+    "version": 3,
+    "outputs": 1,
+    "halt_if": "",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "entity_id": "person.marissa",
+    "state_type": "str",
+    "blockInputOverrides": false,
+    "outputProperties": [
+      {
+        "property": "payload",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "entityState"
+      },
+      {
+        "property": "data",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "entity"
+      }
+    ],
+    "for": "0",
+    "forType": "num",
+    "forUnits": "minutes",
+    "override_topic": false,
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "data",
+    "override_data": "msg",
+    "x": 370,
+    "y": 560,
+    "wires": [
+      [
+        "4960960864e5518b",
+        "60b5d567049ec6b2"
+      ]
+    ]
+  },
+  {
+    "id": "2db9020ab55d76dd",
+    "type": "inject",
+    "z": "aaf4b93dc3a4600c",
+    "d": true,
+    "g": "98527aa7d133e812",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 160,
+    "y": 640,
+    "wires": [
+      [
+        "e6f888e965bb09cb",
+        "775b3155fb3d081e"
+      ]
+    ]
+  },
+  {
+    "id": "4960960864e5518b",
+    "type": "debug",
+    "z": "aaf4b93dc3a4600c",
+    "d": true,
+    "g": "98527aa7d133e812",
+    "name": "debug 10",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 740,
+    "y": 440,
+    "wires": []
+  },
+  {
+    "id": "775b3155fb3d081e",
+    "type": "api-current-state",
+    "z": "aaf4b93dc3a4600c",
+    "d": true,
+    "g": "98527aa7d133e812",
+    "name": "",
+    "server": "1f843fd7.cd512",
+    "version": 3,
+    "outputs": 1,
+    "halt_if": "",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "entity_id": "person.mark",
+    "state_type": "str",
+    "blockInputOverrides": false,
+    "outputProperties": [
+      {
+        "property": "payload",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "entityState"
+      },
+      {
+        "property": "data",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "entity"
+      }
+    ],
+    "for": "0",
+    "forType": "num",
+    "forUnits": "minutes",
+    "override_topic": false,
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "data",
+    "override_data": "msg",
+    "x": 420,
+    "y": 640,
+    "wires": [
+      [
+        "60b5d567049ec6b2"
+      ]
+    ]
+  },
+  {
+    "id": "60b5d567049ec6b2",
+    "type": "function",
+    "z": "aaf4b93dc3a4600c",
+    "d": true,
+    "g": "98527aa7d133e812",
+    "name": "function 8",
+    "func": "const workplaces = /work/ig\nlet name = msg.data.attributes.friendly_name\nlet zone = msg.payload\nlet catbot\nif (zone == \"home\") {\n    catbot = \"Meow! \" + name + \" is at home! 😻🏡\"\n} else if (zone.match(workplaces)) {\n    catbot = \"Meow! \" + name + \" is at work! 😻🧑‍💼\"\n} else if (zone != \"away\") {\n    catbot = \"Meow! \" + name + \" is at \" + zone +  \"! 😻\"\n} else {\n    catbot = \"Meow! \" + name + \" is \" + zone + \"! 😻\"\n}\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 440,
+    "y": 480,
+    "wires": [
+      [
+        "4960960864e5518b"
+      ]
+    ]
+  },
+  {
+    "id": "82bb53a539a75ca9",
+    "type": "api-call-service",
+    "z": "aaf4b93dc3a4600c",
+    "g": "56eb129cfe90f429",
+    "name": "Detect Home Assistant commands",
+    "server": "1f843fd7.cd512",
+    "version": 5,
+    "debugenabled": false,
+    "domain": "conversation",
+    "service": "process",
+    "areaId": [],
+    "deviceId": [],
+    "entityId": [],
+    "data": "{\t   \"text\":payload\t}",
+    "dataType": "jsonata",
+    "mergeContext": "",
+    "mustacheAltTags": false,
+    "outputProperties": [],
+    "queue": "none",
+    "x": 570,
+    "y": 60,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "c13741f557fc259f",
+    "type": "server-state-changed",
+    "z": "aaf4b93dc3a4600c",
+    "g": "d2e1ce6ecc6da2fa",
+    "name": "",
+    "server": "1f843fd7.cd512",
+    "version": 4,
+    "exposeToHomeAssistant": false,
+    "haConfig": [
+      {
+        "property": "name",
+        "value": ""
+      },
+      {
+        "property": "icon",
+        "value": ""
+      }
+    ],
+    "entityidfilter": "binary_sensor.front_door_person_detected",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "on",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 2,
+    "output_only_on_state_change": true,
+    "for": "0",
+    "forType": "num",
+    "forUnits": "minutes",
+    "ignorePrevStateNull": false,
+    "ignorePrevStateUnknown": false,
+    "ignorePrevStateUnavailable": false,
+    "ignoreCurrentStateUnknown": false,
+    "ignoreCurrentStateUnavailable": false,
+    "outputProperties": [
+      {
+        "property": "payload",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "entityState"
+      },
+      {
+        "property": "data",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "eventData"
+      },
+      {
+        "property": "topic",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "triggerId"
+      },
+      {
+        "property": "event_type",
+        "propertyType": "msg",
+        "value": "person_detected",
+        "valueType": "str"
+      }
+    ],
+    "x": 250,
+    "y": 160,
+    "wires": [
+      [
+        "1d5e1165b1c48d8e"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "570391b58083db46",
+    "type": "server-state-changed",
+    "z": "aaf4b93dc3a4600c",
+    "g": "d2e1ce6ecc6da2fa",
+    "name": "",
+    "server": "1f843fd7.cd512",
+    "version": 4,
+    "exposeToHomeAssistant": false,
+    "haConfig": [
+      {
+        "property": "name",
+        "value": ""
+      },
+      {
+        "property": "icon",
+        "value": ""
+      }
+    ],
+    "entityidfilter": "binary_sensor.front_door_doorbell",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "on",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 2,
+    "output_only_on_state_change": true,
+    "for": "0",
+    "forType": "num",
+    "forUnits": "minutes",
+    "ignorePrevStateNull": false,
+    "ignorePrevStateUnknown": false,
+    "ignorePrevStateUnavailable": false,
+    "ignoreCurrentStateUnknown": false,
+    "ignoreCurrentStateUnavailable": false,
+    "outputProperties": [
+      {
+        "property": "payload",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "entityState"
+      },
+      {
+        "property": "data",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "eventData"
+      },
+      {
+        "property": "topic",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "triggerId"
+      },
+      {
+        "property": "event_type",
+        "propertyType": "msg",
+        "value": "doorbell_pressed",
+        "valueType": "str"
+      }
+    ],
+    "x": 230,
+    "y": 220,
+    "wires": [
+      [
+        "1d5e1165b1c48d8e"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "7da1fe01ca382449",
+    "type": "link out",
+    "z": "aaf4b93dc3a4600c",
+    "g": "d2e1ce6ecc6da2fa",
+    "name": "Send Image",
+    "mode": "link",
+    "links": [
+      "ee82660c32f721cf"
+    ],
+    "x": 590,
+    "y": 280,
+    "wires": [],
+    "l": true
+  },
+  {
+    "id": "4a4f55c958968ec6",
+    "type": "link out",
+    "z": "aaf4b93dc3a4600c",
+    "g": "d2e1ce6ecc6da2fa",
+    "name": "to Send Message",
+    "mode": "link",
+    "links": [
+      "c46d860f9d15df6f"
+    ],
+    "x": 810,
+    "y": 320,
+    "wires": [],
+    "l": true
+  },
+  {
+    "id": "df6d0c657207457c",
+    "type": "function",
+    "z": "aaf4b93dc3a4600c",
+    "g": "d2e1ce6ecc6da2fa",
+    "name": "build URL",
+    "func": "let count = msg.payload.hours * 12\nlet base_url = global.get(\"hassio.base_url\",\"file\")\nlet url_part1 = \"/api/unifiprotect/thumbnail/\" \nlet nvr = msg.nvr_id\nlet eventId = msg.data.new_state.attributes.event_id\nmsg.url = base_url + url_part1 + nvr + \"/\" + eventId\nreturn msg;\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 540,
+    "y": 220,
+    "wires": [
+      [
+        "803df6cf3867aa00"
+      ]
+    ]
+  },
+  {
+    "id": "3142187b733d14ae",
+    "type": "link in",
+    "z": "aaf4b93dc3a4600c",
+    "g": "56eb129cfe90f429",
+    "name": "Receive Message to process",
+    "links": [
+      "6a469a172b61ff41"
+    ],
+    "x": 260,
+    "y": 60,
+    "wires": [
+      [
+        "82bb53a539a75ca9"
+      ]
+    ],
+    "l": true
+  }
+]

@@ -1,0 +1,264 @@
+[
+  {
+    "id": "a1097c4732912423",
+    "type": "tab",
+    "label": "wttr.in",
+    "disabled": true,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "12db1c3b997c251e",
+    "type": "link out",
+    "z": "a1097c4732912423",
+    "name": "link out 29",
+    "mode": "link",
+    "links": [
+      "c46d860f9d15df6f"
+    ],
+    "x": 555,
+    "y": 260,
+    "wires": []
+  },
+  {
+    "id": "1b6bfe74fd3aa7cf",
+    "type": "http request",
+    "z": "a1097c4732912423",
+    "name": "JSON",
+    "method": "GET",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "wttr.in/Wellington?format=v2",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [
+      {
+        "keyType": "other",
+        "keyValue": "",
+        "valueType": "other",
+        "valueValue": ""
+      }
+    ],
+    "x": 170,
+    "y": 60,
+    "wires": [
+      [
+        "c3c273219ecb70d8"
+      ]
+    ],
+    "info": "wttr.in/Wellington?format=j1 #JSON\nwttr.in/Wellington?format=v2 #more info"
+  },
+  {
+    "id": "75663261eb945636",
+    "type": "inject",
+    "z": "a1097c4732912423",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 120,
+    "y": 280,
+    "wires": [
+      [
+        "5683dd30f06e6c76"
+      ]
+    ]
+  },
+  {
+    "id": "c3c273219ecb70d8",
+    "type": "function",
+    "z": "a1097c4732912423",
+    "name": "function 10",
+    "func": "let weather = msg.payload\nmsg.formatted_payload = weather.split(\"\\n\\n</pre>\", 1) + \"</pre>\"\nmsg.payload = \"Weather\"\nmsg.format = \"html\"\nmsg.topic = global.get(\"matrix.rooms.catbot\",\"file\")\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 310,
+    "y": 120,
+    "wires": [
+      [
+        "12db1c3b997c251e",
+        "d19fe9b5d3075e68"
+      ]
+    ]
+  },
+  {
+    "id": "d19fe9b5d3075e68",
+    "type": "debug",
+    "z": "a1097c4732912423",
+    "name": "debug 16",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 540,
+    "y": 120,
+    "wires": []
+  },
+  {
+    "id": "5683dd30f06e6c76",
+    "type": "http request",
+    "z": "a1097c4732912423",
+    "name": "Good single line forcast",
+    "method": "GET",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "wttr.in/Wellington?format=\"%l:+%c+%C\\nTemp:+%t+(%f), Rain:+%p, Wind:+%w\\nSun:+%D+%z+%d\\n\"",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [
+      {
+        "keyType": "other",
+        "keyValue": "",
+        "valueType": "other",
+        "valueValue": ""
+      }
+    ],
+    "x": 310,
+    "y": 280,
+    "wires": [
+      [
+        "eea4cab5988a5e63"
+      ]
+    ],
+    "info": "wttr.in/Wellington?format=j1 #JSON\nwttr.in/Wellington?format=v2 #more info"
+  },
+  {
+    "id": "ae9f1fe974fae143",
+    "type": "inject",
+    "z": "a1097c4732912423",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 200,
+    "y": 620,
+    "wires": [
+      [
+        "8ad38ec6f995a1e0"
+      ]
+    ]
+  },
+  {
+    "id": "7dd288c0d60aab29",
+    "type": "function",
+    "z": "a1097c4732912423",
+    "name": "function 11",
+    "func": "let weather = msg.payload\nmsg.formatted_payload = weather.split(\"\\n\\n</pre>\", 1) + \"</pre>\"\nmsg.payload = \"Weather\"\nmsg.format = \"html\"\nmsg.topic = global.get(\"matrix.rooms.catbot\",\"file\")\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 550,
+    "y": 440,
+    "wires": [
+      [
+        "cfb86be45d1fb3cf",
+        "eea4cab5988a5e63"
+      ]
+    ]
+  },
+  {
+    "id": "cfb86be45d1fb3cf",
+    "type": "link out",
+    "z": "a1097c4732912423",
+    "name": "link out 30",
+    "mode": "link",
+    "links": [
+      "c46d860f9d15df6f"
+    ],
+    "x": 755,
+    "y": 640,
+    "wires": []
+  },
+  {
+    "id": "eea4cab5988a5e63",
+    "type": "debug",
+    "z": "a1097c4732912423",
+    "name": "debug 17",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 550,
+    "y": 620,
+    "wires": []
+  },
+  {
+    "id": "8ad38ec6f995a1e0",
+    "type": "http request",
+    "z": "a1097c4732912423",
+    "name": "JSON",
+    "method": "GET",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "wttr.in/Wellington?format=4",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [
+      {
+        "keyType": "other",
+        "keyValue": "",
+        "valueType": "other",
+        "valueValue": ""
+      }
+    ],
+    "x": 250,
+    "y": 560,
+    "wires": [
+      [
+        "eea4cab5988a5e63"
+      ]
+    ],
+    "info": "wttr.in/Wellington?format=j1 #JSON\nwttr.in/Wellington?format=v2 #more info"
+  }
+]

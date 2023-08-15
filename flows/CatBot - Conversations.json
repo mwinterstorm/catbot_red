@@ -1,0 +1,540 @@
+[
+  {
+    "id": "98817579b4d43a21",
+    "type": "tab",
+    "label": "CatBot - Conversations",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "a19998c49682db6c",
+    "type": "group",
+    "z": "98817579b4d43a21",
+    "name": "Catbot Cat Facts",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "d2f7a50b7488ad6f",
+      "844f61454379e575",
+      "1faa3f147aa0a960",
+      "64b93e55cdf51c4a",
+      "ed39f39824ad88ca",
+      "402c4e72eb9aa7ef",
+      "c97134159eb99809",
+      "b6762903c57fbf2a",
+      "0f5656eb33bacadf",
+      "1de3a3ac9f539abf",
+      "8b219f5c926c01b7"
+    ],
+    "x": 14,
+    "y": 19,
+    "w": 902,
+    "h": 262
+  },
+  {
+    "id": "1480b7b889901adc",
+    "type": "group",
+    "z": "98817579b4d43a21",
+    "name": "Conversations",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "38650eec69417288",
+      "734b8d33fedac998",
+      "c0a0c01a35e96a82",
+      "a8172d506c69e3fb",
+      "452a883e7e8dfa4f",
+      "4515575ba6d1f2c7",
+      "d55ac2c1abe5de1e",
+      "48504946d2c60c88",
+      "af1f4bfb62afed20",
+      "cea122cb533817f9"
+    ],
+    "x": 14,
+    "y": 299,
+    "w": 1032,
+    "h": 202
+  },
+  {
+    "id": "d2f7a50b7488ad6f",
+    "type": "inject",
+    "z": "98817579b4d43a21",
+    "g": "a19998c49682db6c",
+    "name": "try every ~5.5 minutes",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "333",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 170,
+    "y": 60,
+    "wires": [
+      [
+        "844f61454379e575"
+      ]
+    ]
+  },
+  {
+    "id": "844f61454379e575",
+    "type": "subflow:6b24fc36ef6360d6",
+    "z": "98817579b4d43a21",
+    "g": "a19998c49682db6c",
+    "name": "19%",
+    "env": [
+      {
+        "name": "chance",
+        "value": "19",
+        "type": "num"
+      }
+    ],
+    "x": 350,
+    "y": 80,
+    "wires": [
+      [
+        "1faa3f147aa0a960"
+      ],
+      [],
+      [
+        "8b219f5c926c01b7"
+      ]
+    ]
+  },
+  {
+    "id": "1faa3f147aa0a960",
+    "type": "http request",
+    "z": "98817579b4d43a21",
+    "g": "a19998c49682db6c",
+    "name": "Get Cat Fact",
+    "method": "GET",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=1",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [],
+    "x": 510,
+    "y": 60,
+    "wires": [
+      [
+        "64b93e55cdf51c4a"
+      ]
+    ]
+  },
+  {
+    "id": "64b93e55cdf51c4a",
+    "type": "switch",
+    "z": "98817579b4d43a21",
+    "g": "a19998c49682db6c",
+    "name": "is Verified",
+    "property": "payload.status.verified",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "true"
+      },
+      {
+        "t": "else"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 680,
+    "y": 60,
+    "wires": [
+      [
+        "ed39f39824ad88ca",
+        "0f5656eb33bacadf"
+      ],
+      [
+        "1de3a3ac9f539abf"
+      ]
+    ]
+  },
+  {
+    "id": "ed39f39824ad88ca",
+    "type": "time-range-switch",
+    "z": "98817579b4d43a21",
+    "g": "a19998c49682db6c",
+    "name": "",
+    "lat": "-41.29497422254253",
+    "lon": "174.80028032454624",
+    "startTime": "sunriseEnd",
+    "endTime": "22:45",
+    "startOffset": "57",
+    "endOffset": 0,
+    "x": 570,
+    "y": 120,
+    "wires": [
+      [
+        "402c4e72eb9aa7ef"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "402c4e72eb9aa7ef",
+    "type": "change",
+    "z": "98817579b4d43a21",
+    "g": "a19998c49682db6c",
+    "name": "Prep Msg",
+    "rules": [
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "#:(file)::matrix.rooms.catfacts",
+        "tot": "global"
+      },
+      {
+        "t": "set",
+        "p": "type",
+        "pt": "msg",
+        "to": "m.notice",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "format",
+        "pt": "msg",
+        "to": "null",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "command",
+        "pt": "msg",
+        "to": "null",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 760,
+    "y": 120,
+    "wires": [
+      [
+        "b6762903c57fbf2a"
+      ]
+    ]
+  },
+  {
+    "id": "c97134159eb99809",
+    "type": "link out",
+    "z": "98817579b4d43a21",
+    "g": "a19998c49682db6c",
+    "name": "to Send Message",
+    "mode": "link",
+    "links": [
+      "c46d860f9d15df6f"
+    ],
+    "x": 730,
+    "y": 240,
+    "wires": [],
+    "l": true
+  },
+  {
+    "id": "b6762903c57fbf2a",
+    "type": "function",
+    "z": "98817579b4d43a21",
+    "g": "a19998c49682db6c",
+    "name": "Add CatBot intro",
+    "func": "let text = msg.payload.text\nlet payload = \"Meow! Time for a cat fact!!! 😻 \" + text\nmsg.payload = payload\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 710,
+    "y": 180,
+    "wires": [
+      [
+        "c97134159eb99809"
+      ]
+    ]
+  },
+  {
+    "id": "0f5656eb33bacadf",
+    "type": "debug",
+    "z": "98817579b4d43a21",
+    "g": "a19998c49682db6c",
+    "name": "debug 12",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": true,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "counter",
+    "x": 845,
+    "y": 60,
+    "wires": [],
+    "l": false
+  },
+  {
+    "id": "1de3a3ac9f539abf",
+    "type": "debug",
+    "z": "98817579b4d43a21",
+    "g": "a19998c49682db6c",
+    "name": "debug 13",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": true,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "counter",
+    "x": 855,
+    "y": 180,
+    "wires": [],
+    "l": false
+  },
+  {
+    "id": "8b219f5c926c01b7",
+    "type": "debug",
+    "z": "98817579b4d43a21",
+    "g": "a19998c49682db6c",
+    "name": "debug 14",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": true,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "counter",
+    "x": 425,
+    "y": 160,
+    "wires": [],
+    "l": false
+  },
+  {
+    "id": "4515575ba6d1f2c7",
+    "type": "function",
+    "z": "98817579b4d43a21",
+    "g": "1480b7b889901adc",
+    "name": "Emotes",
+    "func": "const message = msg.payload\n// CATS \nconst cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nfor (let i = 0; i < cats.length; i++) {\n    if (message.match(cats[i])) {\n        msg.payload = \"😻\"\n        node.status({ fill: \"green\", shape: \"dot\", text: \"Cat Found 😻\" });\n        return msg;\n    }\n}\n// DOGS\nconst dogs = [\n    /\\b(Magny)/g,\n    /\\b(dog\\w?|doggy\\w?|doggies|puppy\\w?|puppies)\\b/gi,\n]\nfor (let i = 0; i < dogs.length; i++) {\n    if (message.match(dogs[i])) {\n        msg.payload = \"😾\"\n        node.status({ fill: \"green\", shape: \"dot\", text: \"Dog Found 😾\" });\n        return msg;\n    }\n}\n// VOMIT\nconst vomit = [\n    /\\b(Jane)/g,\n    /\\b(upstairs\\s?neighbours|guy\\s?upstairs|noise\\s?upstairs|upstairs\\s?noise|going\\s?on\\s?upstairs)\\b/gi,\n    /\\b(Capgemni|work)\\b/gi\n]\nfor (let i = 0; i < vomit.length; i++) {\n    if (message.match(vomit[i])) {\n        msg.payload = \"🤮\"\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Vomited\" });\n        return msg;\n    }\n}\n// Holiday\nconst holiday = [\n    /\\b(Bali|Ubud|Indonesia|Seminyak|Uluwatu)\\b/g,\n    /\\b(holiday\\w?|time\\s?off)\\b/gi,\n]\nfor (let i = 0; i < holiday.length; i++) {\n    if (message.match(holiday[i])) {\n        msg.payload = \"😎\"\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot is cool\" });\n        return msg;\n    }\n}\n// Catbot\nconst catbot = [\n    /\\b(Cat[bB]ot)/g,\n]\nfor (let i = 0; i < catbot.length; i++) {\n    if (message.match(catbot[i])) {\n        msg.payload = \"🐱\"\n        node.status({ fill: \"green\", shape: \"dot\", text: \"Catbot Found 🐱\" });\n        return msg;\n    }\n}\n// WORDLE\nconst wordle = [\n    /\\b(Wordle)\\b/gi,\n]\nconst close = /\\b(Wordle\\s+\\d*\\s+[5-6])/gi\nconst great = /\\b(Wordle\\s+\\d*\\s+[1-2])/gi\nfor (let i = 0; i < wordle.length; i++) {\n    if (message.match(wordle[i])) {\n        if (close.test(message)) {\n            msg.payload = \"🙀\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        } else if (great.test(message)) {\n            msg.payload = \"🥳\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        } else {\n            msg.payload = \"🤓\"\n            msg.status = \"CatBot likes Wordle\"\n            return msg;\n        }\n    }\n}\nnode.done()",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 560,
+    "y": 340,
+    "wires": [
+      [
+        "af1f4bfb62afed20"
+      ]
+    ]
+  },
+  {
+    "id": "c0a0c01a35e96a82",
+    "type": "function",
+    "z": "98817579b4d43a21",
+    "g": "1480b7b889901adc",
+    "name": "Love Kitties 8% of time",
+    "func": "const cats = [\n    /\\b(Reagan|Rae)/g,\n    /\\b(Thatcher|Thatchy|Thatch)/g,\n    /\\b(Romeo|Romey)/g,\n    /\\bGusto/g,\n    /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nconst catbot = \"@bot.catbot:\" + global.get(\"matrix.domain\",\"file\")\nfor (let i = 0; i < cats.length; i++) {\nconst found = message.match(cats[i])\n    if (message.match(cats[i]) && Math.random() <= 0.08 && user != catbot) {\n        msg.payload = \"Meow! I Love \" + found + \" 😻 xoxox \"\n        let status = \"CatBot Loved \" + found\n        msg.format = \"null\"\n        msg.command = [\n            \"catBotReact\"\n        ]\n        node.status({ fill: \"green\", shape: \"dot\", text: status });\n        return msg;\n    } \n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 180,
+    "y": 400,
+    "wires": [
+      [
+        "452a883e7e8dfa4f"
+      ]
+    ]
+  },
+  {
+    "id": "a8172d506c69e3fb",
+    "type": "function",
+    "z": "98817579b4d43a21",
+    "g": "1480b7b889901adc",
+    "name": "Miss / Love Marissa 12.5% of time",
+    "func": "const search = [\n    /\\b(miss\\s?you|love\\s?you)\\b/gi,\n    // /\\b(Thatcher|Thatchy|Thatch)/g,\n    // /\\b(cat\\w?|kitty|kitties|kitten\\w?)\\b/gi,\n]\nconst message = msg.payload\nconst user = msg.userId\nlet marissa = /marissa/i\nif (marissa.test(user)) {\n    for (let i = 0; i < search.length; i++) {\n        const found = message.match(search[i])\n        if (message.match(search[i]) && Math.random() <= 0.125) {\n            msg.payload = \"Meow! 😻 I \" + found + \" too Marissa xoxo\"\n            let status = \"Miss/Love Marissa\"\n            msg.status = status\n            msg.format = \"null\"\n            msg.command = [\n                \"catBotReact\"\n            ]\n            node.status({ fill: \"green\", shape: \"dot\", text: status });\n            return msg;\n        } \n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\n// return msg;\nnode.done();",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 220,
+    "y": 460,
+    "wires": [
+      [
+        "734b8d33fedac998"
+      ]
+    ]
+  },
+  {
+    "id": "452a883e7e8dfa4f",
+    "type": "function",
+    "z": "98817579b4d43a21",
+    "g": "1480b7b889901adc",
+    "name": "Comment on Holiday 35% of time",
+    "func": "const search = [\n    /\\b(Bali|Ubud|Indonesia|Seminyak|Uluwatu|Hawkes\\s?Bay)\\b/g,\n]\n\nconst message = msg.payload\nconst user = msg.userId\nlet bot = /bot/i\nif (!bot.test(user)) {\n    for (let i = 0; i < search.length; i++) {\n        const found = message.match(search[i])\n        const response = [\n            \"I've packed my bags! 200 pairs of kitty sunglasses!!!! xoxoxo\",\n            \"Cat wait to travel to \" + found + \" with you\",\n            \"Is it furr to travel to \" + found + \"?\",\n            \"🛫✈️✈️✈️✈️✈️🛬🏖️🍹🏊️😻\",\n            \"Are we there yet?\",\n        ]\n        if (message.match(search[i]) && Math.random() <= 0.35) {\n            let index = Math.floor(Math.random() * response.length)\n            msg.payload = \"Meow! \" + response[index]\n            let status = \"CatBot comments on holiday\"\n            msg.format = \"null\"\n            msg.command = [\n                \"catBotReact\"\n            ]\n            node.status({ fill: \"green\", shape: \"dot\", text: status });\n            return msg;\n        }\n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot did not act\" });\n// node.done();\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 460,
+    "y": 400,
+    "wires": [
+      [
+        "a8172d506c69e3fb"
+      ]
+    ]
+  },
+  {
+    "id": "38650eec69417288",
+    "type": "rbe",
+    "z": "98817579b4d43a21",
+    "g": "1480b7b889901adc",
+    "name": "",
+    "func": "rbe",
+    "gap": "",
+    "start": "",
+    "inout": "out",
+    "septopics": true,
+    "property": "payload",
+    "topi": "eventId",
+    "x": 370,
+    "y": 340,
+    "wires": [
+      [
+        "c0a0c01a35e96a82",
+        "4515575ba6d1f2c7"
+      ]
+    ]
+  },
+  {
+    "id": "734b8d33fedac998",
+    "type": "rbe",
+    "z": "98817579b4d43a21",
+    "g": "1480b7b889901adc",
+    "name": "",
+    "func": "rbe",
+    "gap": "",
+    "start": "",
+    "inout": "out",
+    "septopics": true,
+    "property": "payload",
+    "topi": "eventId",
+    "x": 450,
+    "y": 460,
+    "wires": [
+      [
+        "48504946d2c60c88"
+      ]
+    ]
+  },
+  {
+    "id": "d55ac2c1abe5de1e",
+    "type": "link in",
+    "z": "98817579b4d43a21",
+    "g": "1480b7b889901adc",
+    "name": "Receive Message to process",
+    "links": [
+      "6a469a172b61ff41"
+    ],
+    "x": 160,
+    "y": 340,
+    "wires": [
+      [
+        "38650eec69417288",
+        "1d89bd3d3e822444"
+      ]
+    ],
+    "l": true
+  },
+  {
+    "id": "48504946d2c60c88",
+    "type": "link out",
+    "z": "98817579b4d43a21",
+    "g": "1480b7b889901adc",
+    "name": "to Send Message",
+    "mode": "link",
+    "links": [
+      "c46d860f9d15df6f"
+    ],
+    "x": 930,
+    "y": 460,
+    "wires": [],
+    "l": true
+  },
+  {
+    "id": "af1f4bfb62afed20",
+    "type": "rbe",
+    "z": "98817579b4d43a21",
+    "g": "1480b7b889901adc",
+    "name": "",
+    "func": "rbe",
+    "gap": "",
+    "start": "",
+    "inout": "out",
+    "septopics": true,
+    "property": "payload",
+    "topi": "eventId",
+    "x": 710,
+    "y": 340,
+    "wires": [
+      [
+        "cea122cb533817f9"
+      ]
+    ]
+  },
+  {
+    "id": "cea122cb533817f9",
+    "type": "link out",
+    "z": "98817579b4d43a21",
+    "g": "1480b7b889901adc",
+    "name": "to Send Emote",
+    "mode": "link",
+    "links": [
+      "18401eb264422f98"
+    ],
+    "x": 880,
+    "y": 340,
+    "wires": [],
+    "l": true
+  },
+  {
+    "id": "1d89bd3d3e822444",
+    "type": "debug",
+    "z": "98817579b4d43a21",
+    "name": "debug 18",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 330,
+    "y": 600,
+    "wires": []
+  }
+]

@@ -1,0 +1,478 @@
+[
+  {
+    "id": "f0657749fd958ec3",
+    "type": "tab",
+    "label": "CatBot",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "365de1913bf44b79",
+    "type": "group",
+    "z": "f0657749fd958ec3",
+    "name": "Change CatBot Profile Pic",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "04bd586e16ce34be",
+      "8dd76251c3eacb93",
+      "f835ee553397b27c",
+      "8c8d1ee7e18390dc",
+      "81e3acc30812436c",
+      "a0f3ba7841d1f81c"
+    ],
+    "x": 14,
+    "y": 359,
+    "w": 832,
+    "h": 142
+  },
+  {
+    "id": "3e2776170b75bf6a",
+    "type": "group",
+    "z": "f0657749fd958ec3",
+    "name": "CatBot sends message",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "6f740e2472598671",
+      "c0daf2705c4830d8",
+      "adac2daf10c3e56f",
+      "c46d860f9d15df6f"
+    ],
+    "x": 94,
+    "y": 159,
+    "w": 872,
+    "h": 82
+  },
+  {
+    "id": "bf02d8ff45864eda",
+    "type": "group",
+    "z": "f0657749fd958ec3",
+    "name": "CatBot receives message",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "d99dfad6aecf0f0e",
+      "40c4aef10bc485ef",
+      "cd786afdef8f6a9b",
+      "6a469a172b61ff41"
+    ],
+    "x": 14,
+    "y": 19,
+    "w": 532,
+    "h": 122
+  },
+  {
+    "id": "d812998db9fcf5f7",
+    "type": "group",
+    "z": "f0657749fd958ec3",
+    "name": "CatBot sends image",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "9141fac02065bb47",
+      "ee82660c32f721cf"
+    ],
+    "x": 94,
+    "y": 259,
+    "w": 432,
+    "h": 82
+  },
+  {
+    "id": "efb6f8252bfd93fc",
+    "type": "group",
+    "z": "f0657749fd958ec3",
+    "name": "CatBot emotes",
+    "style": {
+      "label": true
+    },
+    "nodes": [
+      "cc56b0336819d74b",
+      "18401eb264422f98"
+    ],
+    "x": 534,
+    "y": 259,
+    "w": 392,
+    "h": 82
+  },
+  {
+    "id": "04bd586e16ce34be",
+    "type": "matrix-synapse-create-edit-user",
+    "z": "f0657749fd958ec3",
+    "g": "365de1913bf44b79",
+    "name": "Edit CatBot",
+    "server": "57146ada2355e7df",
+    "x": 750,
+    "y": 460,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "8dd76251c3eacb93",
+    "type": "rbe",
+    "z": "f0657749fd958ec3",
+    "g": "365de1913bf44b79",
+    "name": "",
+    "func": "rbe",
+    "gap": "",
+    "start": "",
+    "inout": "out",
+    "septopics": true,
+    "property": "payload",
+    "topi": "eventId",
+    "x": 590,
+    "y": 460,
+    "wires": [
+      [
+        "04bd586e16ce34be"
+      ]
+    ]
+  },
+  {
+    "id": "f835ee553397b27c",
+    "type": "function",
+    "z": "f0657749fd958ec3",
+    "g": "365de1913bf44b79",
+    "name": "Randomise Pics",
+    "func": "const arr = msg.payload.local\nlet pic = Math.floor(Math.random() * arr.length)\nlet profile = arr[pic]\nmsg.payload = {\n    \"avatar_url\": profile\n}\nmsg.userId = '@bot.catbot:' + global.get(\"matrix.domain\",\"file\")\nif (arr.length > 1) {\n    node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot updating profile\" });\n    return msg;\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\n    node.done();\n}\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 740,
+    "y": 400,
+    "wires": [
+      [
+        "8dd76251c3eacb93"
+      ]
+    ]
+  },
+  {
+    "id": "8c8d1ee7e18390dc",
+    "type": "http request",
+    "z": "f0657749fd958ec3",
+    "g": "365de1913bf44b79",
+    "name": "Get profile pics",
+    "method": "GET",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "bearer",
+    "senderr": false,
+    "headers": [],
+    "x": 540,
+    "y": 400,
+    "wires": [
+      [
+        "f835ee553397b27c"
+      ]
+    ]
+  },
+  {
+    "id": "81e3acc30812436c",
+    "type": "function",
+    "z": "f0657749fd958ec3",
+    "g": "365de1913bf44b79",
+    "name": "Change Profile Pic",
+    "func": "const action = context.get(\"action\") // ACTION WORDS ARE SET IN 'ON START TAB'\nconst command = msg.command\nconst user = msg.userId\nlet trigger = msg.trigger\nfor (let i = 0; i < action.length; i++) {\n    if (action[i].test(command[0]) || trigger == \"timer\" && msg.chance < 0.2) {\n        let payload = \"Meow! I'm changing my purrfile picture!\"\n        node.status({ fill: \"green\", shape: \"dot\", text: payload });\n        msg.payload = payload\n        msg.format = \"null\"\n        let base_url = global.get(\"matrix.base_url\", \"file\")\n        let url_part1 = \"/_synapse/admin/v1/room/\"\n        let room = global.get(\"matrix.rooms.catbotprofilepics\", \"file\")\n        let url_part2 = \"/media\"\n        msg.url = base_url + url_part1 + room + url_part2\n        return msg;\n    }\n}\nnode.status({ fill: \"red\", shape: \"dot\", text: \"CatBot taking no action\" });\nnode.done();\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "// Code added here will be run once\n// whenever the node is started.\nconst action = [/\\bpic\\b/i, /\\bpicture\\b/i]\ncontext.set(\"action\", action)\nlet words = action.toString()\nwords = words.replace(/(?<=\\\\)\\w?/g, \"\")\nwords = words.replace(/\\\\/g, \"\")\nlet arr = words.match(/\\w+(?=\\/)/g)\nlet helpText = \"<li><b><em>\" + arr.toString() + \"</em></b> - change CatBot's profile picture </li>\"\nglobal.set(\"help.pics\", helpText, \"file\")\n",
+    "finalize": "",
+    "libs": [],
+    "x": 330,
+    "y": 400,
+    "wires": [
+      [
+        "8c8d1ee7e18390dc"
+      ]
+    ]
+  },
+  {
+    "id": "a0f3ba7841d1f81c",
+    "type": "inject",
+    "z": "f0657749fd958ec3",
+    "g": "365de1913bf44b79",
+    "name": "29 Hours",
+    "props": [
+      {
+        "p": "command",
+        "v": "change pic",
+        "vt": "str"
+      },
+      {
+        "p": "chance",
+        "v": "$random()\t",
+        "vt": "jsonata"
+      },
+      {
+        "p": "trigger",
+        "v": "timer",
+        "vt": "str"
+      },
+      {
+        "p": "eventId",
+        "v": "",
+        "vt": "date"
+      }
+    ],
+    "repeat": "7260",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 0.1,
+    "topic": "",
+    "x": 130,
+    "y": 400,
+    "wires": [
+      [
+        "81e3acc30812436c"
+      ]
+    ]
+  },
+  {
+    "id": "6f740e2472598671",
+    "type": "rbe",
+    "z": "f0657749fd958ec3",
+    "g": "3e2776170b75bf6a",
+    "name": "Changed payload only",
+    "func": "rbe",
+    "gap": "",
+    "start": "",
+    "inout": "out",
+    "septopics": true,
+    "property": "payload",
+    "topi": "eventId",
+    "x": 660,
+    "y": 200,
+    "wires": [
+      [
+        "adac2daf10c3e56f"
+      ]
+    ]
+  },
+  {
+    "id": "c0daf2705c4830d8",
+    "type": "function",
+    "z": "f0657749fd958ec3",
+    "g": "3e2776170b75bf6a",
+    "name": "format html",
+    "func": "const format = msg.format\nif (format == \"html\") {\n    let htmlmessage = \"<body>\" + msg.formatted_payload + \"</body>\"\n    msg.formatted_payload = htmlmessage\n}\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 200,
+    "wires": [
+      [
+        "6f740e2472598671"
+      ]
+    ]
+  },
+  {
+    "id": "adac2daf10c3e56f",
+    "type": "matrix-send-message",
+    "z": "f0657749fd958ec3",
+    "g": "3e2776170b75bf6a",
+    "name": "",
+    "server": "57146ada2355e7df",
+    "roomId": "",
+    "message": "",
+    "messageType": "m.notice",
+    "messageFormat": "msg.format",
+    "replaceMessage": false,
+    "x": 860,
+    "y": 200,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "c46d860f9d15df6f",
+    "type": "link in",
+    "z": "f0657749fd958ec3",
+    "g": "3e2776170b75bf6a",
+    "name": "Receive Message to Send",
+    "links": [
+      "4a4f55c958968ec6",
+      "54f2928fa17acc1b",
+      "7702aadf79d9809c",
+      "c97134159eb99809",
+      "cd786afdef8f6a9b",
+      "12db1c3b997c251e",
+      "48504946d2c60c88",
+      "cfb86be45d1fb3cf"
+    ],
+    "x": 230,
+    "y": 200,
+    "wires": [
+      [
+        "c0daf2705c4830d8"
+      ]
+    ],
+    "l": true
+  },
+  {
+    "id": "d99dfad6aecf0f0e",
+    "type": "matrix-receive",
+    "z": "f0657749fd958ec3",
+    "g": "bf02d8ff45864eda",
+    "name": "",
+    "server": "57146ada2355e7df",
+    "roomId": "",
+    "acceptText": true,
+    "acceptEmotes": false,
+    "acceptStickers": false,
+    "acceptReactions": false,
+    "acceptFiles": false,
+    "acceptAudio": false,
+    "acceptImages": false,
+    "acceptVideos": false,
+    "acceptLocations": false,
+    "x": 120,
+    "y": 60,
+    "wires": [
+      [
+        "40c4aef10bc485ef"
+      ]
+    ]
+  },
+  {
+    "id": "40c4aef10bc485ef",
+    "type": "function",
+    "z": "f0657749fd958ec3",
+    "g": "bf02d8ff45864eda",
+    "name": "!meow",
+    "func": "const wakeWord = /^!meow/i\nconst catBot = /^CatBot\\s*$/i\nconst help = /help/i\nconst user = msg.userId\nconst room = msg.topic\nlet message = msg.payload\nif (!user.includes(\"catbot\")) {\n    if (wakeWord.test(message) && !help.test(message) && message.length > 6) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg,null];\n    } else if (wakeWord.test(message) && help.test(message) || wakeWord.test(message) && message.length < 7 || catBot.test(message)) {\n        let command = message.replace(wakeWord, '').split(' ')\n        command.shift()\n        command.splice(0, 1, \"help\")\n        node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n        msg.command = command\n        msg.format = \"html\"\n        msg.payload = \"CatBot Kitty Helping\"\n        msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n        let helpArr = Object.values(global.get(\"help\",\"file\"))\n        let helpList\n        for (let i = 0; i < helpArr.length; i++) {\n            if (i != 0) {\n                helpList += helpArr[i]\n            } else {\n                helpList = helpArr[i]\n            }\n        }\n        helpList = helpList + \"<li><b><em> help </em></b> - ask for CatBot's Kitty Help </li>\"\n        msg.formatted_payload = msg.formatted_payload + \"<ul>\" + helpList + \"</ul>\"\n        return [null,msg];\n    } else if (room == global.get(\"matrix.rooms.catbot\",\"file\")) {\n        let command = message.replace(wakeWord, '').split(' ')\n        if (help.test(message)) {\n            let command = message.replace(wakeWord, '').split(' ')\n            command.splice(0, 1, \"help\")\n            node.status({ fill: \"blue\", shape: \"dot\", text: \"CatBot kitty helping!\" });\n            msg.command = command\n            msg.format = \"html\"\n            msg.payload = \"CatBot Kitty Helping\"\n            msg.formatted_payload = \"<p> <b> #### CatBot Kitty Helps You! #### </b><br><br> <b>Usage: </b> !meow &lt;command&gt;</p>\"\n            let helpArr = Object.values(global.get(\"help\", \"file\"))\n            let helpList\n            for (let i = 0; i < helpArr.length; i++) {\n                helpList += helpArr[i]\n            }\n            helpList = helpList + \"<li><b><em> help </em></b> - ask for CatBot's Kitty Help </li>\"\n            msg.formatted_payload = msg.formatted_payload + \"<ul>\" + helpList + \"</ul>\"\n            return [null, msg];\n        }\n        node.status({ fill: \"green\", shape: \"dot\", text: \"CatBot Awake! \" + command });\n        msg.command = command\n        msg.format = null\n        return [msg, null];\n    } else {\n        node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n        node.done();\n    }\n} else {\n    node.status({ fill: \"red\", shape: \"dot\", text: \"CatBot Asleep! zzzzz\" });\n    node.done();\n}\n",
+    "outputs": 2,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 290,
+    "y": 60,
+    "wires": [
+      [
+        "6a469a172b61ff41"
+      ],
+      [
+        "cd786afdef8f6a9b"
+      ]
+    ]
+  },
+  {
+    "id": "cd786afdef8f6a9b",
+    "type": "link out",
+    "z": "f0657749fd958ec3",
+    "g": "bf02d8ff45864eda",
+    "name": "Kitty help!",
+    "mode": "link",
+    "links": [
+      "c46d860f9d15df6f"
+    ],
+    "x": 460,
+    "y": 100,
+    "wires": [],
+    "l": true
+  },
+  {
+    "id": "6a469a172b61ff41",
+    "type": "link out",
+    "z": "f0657749fd958ec3",
+    "g": "bf02d8ff45864eda",
+    "name": "Meow!",
+    "mode": "link",
+    "links": [
+      "34bf1b89086ee69f",
+      "3142187b733d14ae",
+      "67dba891485db94d",
+      "d55ac2c1abe5de1e"
+    ],
+    "x": 450,
+    "y": 60,
+    "wires": [],
+    "l": true
+  },
+  {
+    "id": "9141fac02065bb47",
+    "type": "matrix-send-image",
+    "z": "f0657749fd958ec3",
+    "g": "d812998db9fcf5f7",
+    "name": "",
+    "server": "57146ada2355e7df",
+    "roomId": "",
+    "contentType": "",
+    "x": 430,
+    "y": 300,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "ee82660c32f721cf",
+    "type": "link in",
+    "z": "f0657749fd958ec3",
+    "g": "d812998db9fcf5f7",
+    "name": "Receive Image to Send",
+    "links": [
+      "7da1fe01ca382449"
+    ],
+    "x": 220,
+    "y": 300,
+    "wires": [
+      [
+        "9141fac02065bb47"
+      ]
+    ],
+    "l": true
+  },
+  {
+    "id": "cc56b0336819d74b",
+    "type": "matrix-react",
+    "z": "f0657749fd958ec3",
+    "g": "efb6f8252bfd93fc",
+    "name": "React",
+    "server": "57146ada2355e7df",
+    "roomId": "",
+    "reaction": "",
+    "x": 850,
+    "y": 300,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "18401eb264422f98",
+    "type": "link in",
+    "z": "f0657749fd958ec3",
+    "g": "efb6f8252bfd93fc",
+    "name": "Receive emote to send",
+    "links": [
+      "cea122cb533817f9"
+    ],
+    "x": 660,
+    "y": 300,
+    "wires": [
+      [
+        "cc56b0336819d74b"
+      ]
+    ],
+    "l": true
+  }
+]
