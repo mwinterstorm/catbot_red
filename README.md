@@ -1,6 +1,9 @@
 catbot
 ======
 
+## UPDATE
+I have decided to re-write catBot as a proper nodejs app. see [repo here](https://github.com/mwinterstorm/catBot)
+
 ## Alpha state ##
 
 Bot for matrix. Currently designed for my personal use - mainly silly and fun
